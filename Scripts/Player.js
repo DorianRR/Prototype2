@@ -14,7 +14,7 @@ function createPlayer()
 	player.animations.add('left', [0, 1, 2, 3], 10, true);
     player.animations.add('right', [5, 6, 7, 8], 10, true);
 
-
+    player.health = 3;
 }
 
 function updatePlayer()
@@ -47,10 +47,12 @@ function updatePlayer()
         player.frame = 4;
     }
     
-    //  Allow the player to jump if they are touching the ground.
+        //  Allow the player to jump if they are touching the ground.
     if (cursors.up.isDown && player.body.touching.down && hitPlatform)
     {
         player.body.velocity.y = -350;
     }
 
+    if(player.health <= 0)
+        player.kill();
 }
