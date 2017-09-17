@@ -36,6 +36,7 @@ var collectible;
 
 var score = 0;
 var scoreText;
+var map;
 
 function create(){
 
@@ -43,7 +44,8 @@ function create(){
 
 	
 
-	game.add.sprite(0,0,'map');
+	map = game.add.tileSprite(0,0, 800,600,'map');
+	map.fixedToCamera = true;
 	game.add.sprite(0,0,'enemy');
 
 	player = game.add.sprite(32, game.world.height -150, 'dude');
@@ -89,6 +91,8 @@ function create(){
 			var star = collectible.create(i*70 , 0, 'star');
 			star.body.gravity.y = 6;
 		}
+
+	game.camera.follow(player);
 
 	scoreText = game.add.text(16, 16, 'Score : 0', {fontSize: '32px', fill: '#000'});
 
