@@ -11,17 +11,11 @@
     </style>
 </head>
 <body>
-<<<<<<< HEAD
 
-	
-=======
->>>>>>> parent of aac4df9... update
 
 <script type="text/javascript">
 
 var game = new Phaser.Game(600, 600, Phaser.AUTO, '', {preload: preload, create: create, update: update, render: render});
-
-//<script src="hero.js" type="text/javascript>
 
 
 
@@ -44,6 +38,7 @@ var collectible;
 var score = 0;
 var scoreText;
 var map;
+
 
 function create(){
 
@@ -152,6 +147,10 @@ function collectItem(player, collectible){
 	
 	score += 10;
     scoreText.text = 'Score: ' + score;
+}
+
+enemyCat = function (game, x, y, player){
+
 }
 
 </script>
