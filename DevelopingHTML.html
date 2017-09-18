@@ -51,7 +51,9 @@ function create(){
 
 	map = game.add.tileSprite(0,0, 1200, 600,'map');
 	game.world.setBounds(0,0,1200,600);
-	//map.fixedToCamera = true;
+
+	map.fixedToCamera = true;
+	
 	game.add.sprite(0,0,'enemy');
 
 	player = game.add.sprite(32, game.world.height -150, 'dude');
@@ -157,8 +159,6 @@ function collectItem(player, collectible){
 }
 
 
-enemyCat = function (game, x, y, player){
-}
 
 </script>
 </body>
