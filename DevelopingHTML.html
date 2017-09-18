@@ -14,11 +14,12 @@
     </style>
 </head>
 <body>
-	
-<script>
+
+
+<script type="text/javascript">
+
 
 var game = new Phaser.Game(600, 600, Phaser.AUTO, '', {preload: preload, create: create, update: update, render: render});
-
 
 function preload(){
 
@@ -40,6 +41,7 @@ var collectible;
 var score = 0;
 var scoreText;
 var map;
+
 
 function create(){
 
@@ -153,6 +155,9 @@ function collectItem(player, collectible){
 	score += 10;
     scoreText.text = 'Score: ' + score;
 }
+
+
+enemyCat = function (game, x, y, player){
 
 
 </script>
