@@ -13,11 +13,13 @@
     </style>
 </head>
 <body>
+	
+<script src="hero.js" type="text/javascript>
 
 <script type="text/javascript">
 
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', {preload: preload, create: create, update: update});
+var game = new Phaser.Game(600, 600, Phaser.AUTO, '', {preload: preload, create: create, update: update, render: render});
 
 var player;
 var cursors;
@@ -26,19 +28,47 @@ var platforms;
 
 function preload(){
 
-	game.load.image('player', "Assets/Player.png");
+	game.load.image('ground', 'assets/platform.png')
 	game.load.image('enemy', "Assets/Enemy.png");
 	game.load.image('map', "Assets/Back.png");
-	game.load.spritesheet('dude', "Assets/dude.png", 32, 48);
+	game.load.spritesheet('dude','assets/dude.png', 32, 48)
+	game.load.image('star','assets/Enemy.png');
 
 }
+
+var player;
+var platforms;
+var cursors;
+
+var collectible;
+
+var score = 0;
+var scoreText;
+var map;
 
 function create(){
 
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 
-	game.add.sprite(0,0,'map');
+	
+
+	map = game.add.tileSprite(0,0, 1200, 600,'map');
+	game.world.setBounds(0,0,1200,600);
+	//map.fixedToCamera = true;
 	game.add.sprite(0,0,'enemy');
+
+	player = game.add.sprite(32, game.world.height -150, 'dude');
+
+	game.physics.arcade.enable(player);
+
+	player.body.bounce.y = 0.2;
+	player.body.gravity.y = 300;
+	player.body.collideWorldBounds = true;
+
+	player.animations.add('left', [0,1,2,3],10, true);
+	player.animations.add('right', [5,6,7,8],10, true);
+
+
 
 	platforms = game.add.group();
 
@@ -47,7 +77,7 @@ function create(){
 	var ground = platforms.create(0, game.world.height -32, 'ground');
 
 	//32 pixels = 1
-	ground.scale.setTo(25,2);
+	ground.scale.setTo(3,2);
 
 	ground.body.immovable = true;
 
@@ -55,14 +85,30 @@ function create(){
 
 	ledge.body.immovable = true;
 
-	ledge.scale.setTo(12.5,1);
-
+	ledge.scale.setTo(1,1);
 
 	ledge = platforms.create(0,250, 'ground');
 
 	ledge.body.immovable = true;
 
-	ledge.scale.setTo(10,1);
+	ledge.scale.setTo(2,1);
+
+	collectible = game.add.group();
+
+	collectible.enableBody = true;
+
+	for (var i = 0; i < 13; i++){
+			var star = collectible.create(i*70 , 0, 'star');
+			star.body.gravity.y = 6;
+		}
+
+	game.camera.follow(player);
+
+	scoreText = game.add.text(16, 16, 'Score : 0', {fontSize: '32px', fill: '#000'});
+	scoreText.fixedToCamera = true;
+
+	cursors = game.input.keyboard.createCursorKeys();
+
 
 	createPlayer();
 
@@ -71,10 +117,48 @@ function create(){
 	cursors = game.input.keyboard.createCursorKeys();
 }
 
+
+
 function update(){
 
 	updatePlayer();
 	updateEnemies();
+	game.physics.arcade.collide(collectible, platforms);
+	game.physics.arcade.collide(player, platforms);
+	game.physics.arcade.overlap(player, collectible, collectItem, null, this);
+
+	player.body.velocity.x = 0;
+
+	if(cursors.left.isDown){
+		player.body.velocity.x = -150;
+		player.animations.play('left');
+	}
+
+	else if(cursors.right.isDown){
+		player.body.velocity.x = 150;
+		player.animations.play('right');
+	}
+	else{
+		player.animations.stop();
+		player.frame = 4;
+	}
+	if(cursors.up.isDown && player.body.touching.down){
+		player.body.velocity.y = -350;
+	}
+
+}
+
+function render(){
+
+	    game.debug.cameraInfo(game.camera, 32, 32);
+
+}
+
+function collectItem(player, collectible){
+	collectible.kill();
+	
+	score += 10;
+    scoreText.text = 'Score: ' + score;
 }
 
 
