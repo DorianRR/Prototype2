@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="js/phaser.min.js"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+
+// initiate the game
+// x, y, rendering context, DOM element to attach to
+// followed by 4 essential Phaser functions
+// these 4 are then mapped to functions below
+var game = new Phaser.Game(640, 480, Phaser.AUTO, '', {
+    preload: preload, create: create, update: update
+});
+
+var platforms;
+var slimes;
+var bullets;
+
+var players;
+var player;
+
+var cursors;
+var spaceBar;
+
+var score = 0;
+var scoreText;
+
+var bulletXSpeed = 300;
+
+function preload() {
+    loadAssets();
+}
+
+function loadAssets() {
+    // alias, path, x, y dimension
+    game.load.spritesheet('player', 'assets/sprites/hero-transparent-borderless.png', 28, 28);
+    game.load.spritesheet('slime', 'assets/sprites/slime-transparent-set-withdir.png', 28, 28);
+
+    // load images
+    game.load.image('bg', 'assets/bg/wall.png');
+    game.load.image('ground', 'assets/bg/ground.png');
+    game.load.image('bullet', 'assets/sprites/red-square-bullet.png');
+}
+
+function create() {
+
+    // activate physics engine
+    game.physics.startSystem(Phaser.Physics.ARCADE);
+
+    // set the 'bg' object and repeat it across the screen
+    // start x, y, size x, y, reference
+    // game.add.tileSprite(0, 0, 640, 480, 'bg');
+    // loading of assets is sequential and determines their z-index
+
+    bullets = game.add.group();
+    bullets.enableBody = true;
+
+    // create a generic platform group
+    platforms = game.add.group();
+    // enables physics to members of group
+    platforms.enableBody = true;
+
+    var ground = new Platform(this, 0, game.world.height - 16, 640, 16, 'ground');
+    platforms.add(ground);
+
+    // start x, y, size x, y, reference
+    for (var i = 1; i <= 6; i++) {
+        // we now use Platform objects
+        var ledge = new Platform(this, 50, i * 64, 32 * i * 2, 16, 'ground');
+        platforms.add(ledge);
+    }
+
+    for (var i = 6; i >= 1; i--) {
+        var ledge = new Platform(this, (game.width - 32 * i * 2) - 50, (game.height - 64 * i) - 32, 32 * i * 2, 16, 'ground')
+        platforms.add(ledge);
+    }
+
+    platforms.forEach(function (item) {
+        item.body.collideWorldBounds = true;
+        item.body.immovable = true;
+        item.body.allowGravity = false;
+    }, this);
+
+    slimes = game.add.group();
+    slimes.enableBody = true;
+
+    for (var i = 0; i < 9; i++) {
+        var slime = new Slime(game, i * 128, i * 32, 50);
+        slimes.add(slime);
+    }
+
+    // activate arrow controls
+    cursors = game.input.keyboard.createCursorKeys();
+
+    scoreText = game.add.text(8, 8, 'Score: 0', { fontSize: '32px', fill: '#FFF' });
+
+    players = game.add.group();
+    players.enableBody = true;
+
+    // player is also an object now
+    player = new Player(game, 200, 10);
+    players.add(player);
+
+}
+
+function update() {
+    // all inter-object interaction has been moved to their respective prototypes with the exception of:
+    game.physics.arcade.collide(players, slimes);
+}
+
+Platform = function (game, x, y, length, height, sprite) {
+    Phaser.TileSprite.call(this, game, x, y, length, height, sprite);
+}
+
+Platform.prototype = Object.create(Phaser.TileSprite.prototype);
+Platform.prototype.constructor = Platform;
+
+Player = function (game, x, y) {
+    Phaser.Sprite.call(this, game, x, y, "player");
+    game.physics.enable(this, Phaser.Physics.ARCADE);
+    this.direction = 1;
+    this.body.bounce.y = 0.2;
+    this.body.gravity.y = 640;
+    this.body.collideWorldBounds = true;
+    this.animations.add('left', [5, 6, 7, 8, 9], 10, true);
+    this.animations.add('right', [0, 1, 2, 3, 4], 10, true);
+
+    spaceBar = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    spaceBar.onDown.add(this.attack, this);
+
+}
+
+Player.prototype = Object.create(Phaser.Sprite.prototype);
+Player.prototype.constructor = Player;
+
+Player.prototype.update = function () {
+    game.physics.arcade.collide(this, platforms);
+
+    this.handleMovement();
+};
+
+Player.prototype.handleMovement = function () {
+
+    this.body.velocity.x = 0;
+    if (cursors.left.isDown) {
+        //  Move to the left
+        this.body.velocity.x = -150;
+        this.direction = -1;
+        this.animations.play('left');
+    }
+    else if (cursors.right.isDown) {
+        //  Move to the right
+        this.body.velocity.x = 150;
+        this.direction = 1;
+        this.animations.play('right');
+    } else {
+        //  Stand still
+        this.animations.stop();
+        // set this if you want to reset the 'stance' of the player: player.frame = 4;
+    }
+
+    //  Allow the player to jump if they are touching the ground.
+    if (cursors.up.isDown && this.body.touching.down) {
+        this.body.velocity.y = -350;
+    }
+
+}
+
+Player.prototype.attack = function () {
+    if (bullets.length < 5) {
+        var bullet = new Bullet(game, this.x + 10, this.y + 10, this.direction, bulletXSpeed);
+        bullets.add(bullet);
+    }
+}
+
+Bullet = function (game, x, y, direction, speed) {
+    Phaser.Sprite.call(this, game, x, y, "bullet");
+    game.physics.enable(this, Phaser.Physics.ARCADE);
+    this.xSpeed = direction * speed;
+};
+
+Bullet.prototype = Object.create(Phaser.Sprite.prototype);
+Bullet.prototype.constructor = Bullet;
+
+Bullet.prototype.update = function () {
+
+    game.physics.arcade.overlap(this, slimes, function (bullet, slime) {
+        bullet.destroy();
+        slime.destroy();
+
+        score += 1;
+        scoreText.text = 'Score: ' + score;
+    });
+
+    game.physics.arcade.overlap(this, platforms, function (bullet) {
+        bullet.destroy();
+    });
+
+    this.body.velocity.y = 0;
+    this.body.velocity.x = this.xSpeed;
+    if (this.x < 0 || this.x > 640) {
+        this.destroy();
+    }
+
+};
+
+Slime = function (game, x, y) {
+    Phaser.Sprite.call(this, game, x, y, "slime");
+    game.physics.enable(this, Phaser.Physics.ARCADE);
+    this.collideWorldBounds = true;
+    this.enableBody = true;
+    this.animations.add('right', [0, 1, 2, 3, 4], 5, true);
+    this.animations.add('left', [5, 6, 7, 8, 9], 5, true);
+    this.body.gravity.y = 640;
+    this.body.bounce.y = 0;// 0.7 + Math.random() * 0.2;
+    this.body.bounce.x = 1;
+    this.body.collideWorldBounds = true;
+    this.body.velocity.x = 80;
+
+};
+
+Slime.prototype = Object.create(Phaser.Sprite.prototype);
+Slime.prototype.constructor = Slime;
+
+Slime.prototype.update = function () {
+
+    var chasing = false;
+
+    // check if the slime's y position on the map is equal to the player's y position
+    // we use Math.round to ignore the decimal
+    if (Math.round(this.y) == Math.round(player.y)) {
+        // if both slime and player are on the same 'plane' move towards the player!
+        if (Math.round(player.x) > Math.round(this.x)) {
+            // we increase the speed from the default 80 to 200
+            this.body.velocity.x = 200;
+        } else {
+            this.body.velocity.x = -200;
+        }
+        chasing = true;
+    }
+
+    if(!chasing){
+        // when the slime isn't actively chasing the player,
+        // reduce speeds back to normal
+        if(this.body.velocity.x > 0){
+            this.body.velocity.x = 80;
+        } else if(this.body.velocity.x < 0){
+            this.body.velocity.x = -80;
+        }
+    }
+
+    game.physics.arcade.collide(this, platforms, function (slime, platform) {
+        if (slime.body.velocity.x > 0 && slime.x > platform.x + (platform.width - slime.width) ||
+                slime.body.velocity.x < 0 && slime.x < platform.x) {
+            // this is still the old platform patrol AI from before
+            // we added the chasing check so the slime will stop at the edge closest to the player
+            if (chasing) {
+                slime.body.velocity.x = 0;
+            } else {
+                slime.body.velocity.x *= -1;
+            }
+        }
+    });
+
+    game.physics.arcade.collide(this, slimes, function (slime, slimes) {
+        slime.body.velocity.x *= -1;
+    });
+
+    if (this.body.velocity.x > 0) {
+        // this.animations.stop();
+        this.animations.play('right');
+    } else {
+        //this.animations.stop();
+        this.animations.play('left');
+    }
+
+};
+
+</script>
+
+</body>
+</html>
