@@ -96,6 +96,7 @@ function create(){
 	game.camera.follow(player);
 
 	scoreText = game.add.text(16, 16, 'Score : 0', {fontSize: '32px', fill: '#000'});
+	scoreText.fixedToCamera = true;
 
 	cursors = game.input.keyboard.createCursorKeys();
 
@@ -133,6 +134,8 @@ function update(){
 }
 
 function render(){
+
+	    game.debug.cameraInfo(game.camera, 32, 32);
 
 }
 
