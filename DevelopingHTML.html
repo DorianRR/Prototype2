@@ -7,7 +7,6 @@
 	<script type="text/javascript" src="Scripts/Player.js"></script>
 	<script type="text/javascript" src="Scripts/Enemies.js"></script>
 	<script type="text/javascript" src="Scripts/Scene.js"></script>
-	<script src="hero.js" type="text/javascript"></script>
     <style type="text/css">
         body {
             margin: 0;
@@ -25,7 +24,7 @@ var game = new Phaser.Game(600, 600, Phaser.AUTO, '', {preload: preload, create:
 function preload(){
 
 	game.load.image('ground', 'assets/platform.png')
-	game.load.image('enemy', "asets/Enemy.png");
+	game.load.image('enemy', "assets/Enemy.png");
 	game.load.image('map', "assets/Back.png");
 	game.load.spritesheet('dude','assets/dude.png', 32, 48)
 	game.load.image('star','assets/Enemy.png');
