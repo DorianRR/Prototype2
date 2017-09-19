@@ -11,6 +11,8 @@ function createEnemies()
 }
 
 var hitPlatform; 
+var enemy;
+
 function updateEnemies()
 {
     //call hitEnemy() when hit
@@ -19,6 +21,10 @@ function updateEnemies()
 	game.physics.arcade.collide(enemies, platforms);
 
 	enemies.forEach(move, this, true);
+	// enemy.body.onWorldBounds = new Phaser.Signal();
+	// console.log("got signal");
+	// enemy.body.onWorldBounds.add(changeDirection, this);
+	// console.log("called CD");
 
 	//game.physics.arcade.collide(enemies, platforms);
 }
@@ -27,17 +33,18 @@ function updateEnemies()
 //create one enemy at (x, y)
 function createEnemy(x, y)
 {
-	var enemy = enemies.create(x, y, 'enemy');
+	enemy = enemies.create(x, y, 'enemy');
 
 	game.physics.arcade.enable(enemy);
 
 	//change direction when hit bounds
-	enemy.body.collideWorldBounds = false;
-	enemy.body.onWorldBounds = new Phaser.Signal();
-	enemy.body.onWorldBounds.add(changeDirection, this);
+	enemy.body.collideWorldBounds = true;
+
+
+	
+
 	enemy.body.gravity.y = 350;
 	enemy.direction = game.rnd.integerInRange(0,1) * 2 - 1;
-	//enemy.body.velocity = 
 
 }
 
@@ -58,18 +65,30 @@ function move(enemy)
     //  Allow the player to jump if they are touching the rope.
     if (hitRope && enemy.body.touching.down)
     {
-        enemy.body.velocity.y = -700;
+        enemy.body.velocity.y = -500;
     }
+	if(enemy.world.x < 5){
+			console.log("change direction");
+
+			enemy.direction = 1;
+	}
+	else if(enemy.world.x > 1165){
+			console.log("change direction");
+
+			enemy.direction = -1;
+	}
+    else if(Math.round(player.world.y) == (Math.round(this.y))){
 
 
-    if(!hitPlatform)
-    {
-	    if(enemy.x > player.x)
-	    	enemy.direction = -1;
-	    else
-	    	enemy.direction = 1;
-    }  	
-
+	    if(player.body.touching.down && !hitPlatform)
+	    {
+		    if(enemy.x > player.x)
+		    	enemy.direction = -1;
+		    else
+		    	enemy.direction = 1;
+	    }  	
+	
+	}
     //console.log(enemy.directon);
     enemy.body.velocity.x = enemy.direction * 100;
 
@@ -97,9 +116,13 @@ function move(enemy)
 // 	}
 // }
 
-function changeDirection(enemy, up, down, left, right)
+function changeDirection(enemy)
 {
-	if(left || right)
-		enemy.direction = -enemy.direction;
+	if(enemy.direction < 0){
+		enemy.direction = 1;
+	}
+	else{
+		enemy.direction = -1;
+	}
 	console.log("change direction");
 }
