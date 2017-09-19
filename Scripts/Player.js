@@ -68,12 +68,14 @@ function updatePlayer()
 function openDoor(player, door)
 {
     if(cursors.space.isDown){
+    
         door.loadTexture('doorOpen');
         return false;
     }
-    return true;
+    
     
 }
 
-
-//game.physics.arcade.collide(player, obstacle, function() {  // do any collision stuff here}, function() {  if (enableObstacleCollide) {    return true;  }  return false;});
+function doorHit(){
+    // console.log("hi");
+}
