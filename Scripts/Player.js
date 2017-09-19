@@ -22,6 +22,7 @@ function updatePlayer()
 {
 	//  Collide the player with the platforms
     game.physics.arcade.collide(player, platforms);
+    game.physics.arcade.collide(player, doors);
 
     //  Reset the players velocity
     player.body.velocity.x = 0;
@@ -54,8 +55,10 @@ function updatePlayer()
     {
         player.body.velocity.y = -500;
     }
+    
+    game.physics.arcade.collideWorldBounds(player, doors, openDoor, null, this);
 
-    game.physics.arcade.overlap(player, doors, openDoor, null, this);
+    
 
     if(player.health <= 0 )
         player.kill();
@@ -63,7 +66,10 @@ function updatePlayer()
 
 function openDoor(player, door)
 {
-    door.enableBody = false;
-    door.loadTexture('doorOpen');
+    if(cursors.right.isDown){
+        door.enableBody = false;
+        door.loadTexture('doorOpen');
 
+    }
+    
 }
