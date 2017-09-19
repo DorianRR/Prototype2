@@ -78,6 +78,8 @@ function openDoor(player, door)
         var openDoor = doors.create(door.x, door.y, "doorOpen");
         door.destroy(true, true);
         console.log("open door");
+        createWave(player.world.x,player.world.y, 'wave')
+
         return false;
     }    
     
