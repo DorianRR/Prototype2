@@ -17,13 +17,20 @@ function createPlayer()
 
     player.health = 3;
 
+    waves = game.add.group();
+    waves.enableBody = true;
+
+
 }
 
 function updatePlayer()
 {
 	//  Collide the player with the platforms
+    
     game.physics.arcade.collide(player, platforms);
     game.physics.arcade.collide(player, doors, openDoor, openDoor, this);
+    game.physics.arcade.collide(waves, enemies);
+
 
     //  Reset the players velocity
     player.body.velocity.x = 0;
@@ -68,14 +75,18 @@ function updatePlayer()
 function openDoor(player, door)
 {
     if(cursors.space.isDown){
-    
+        createWave(player.world.x,player.world.y, 'wave')
+        
         door.loadTexture('doorOpen');
+
         return false;
     }
     
     
 }
 
-function doorHit(){
-    // console.log("hi");
-}
+function createWave(x, y, sprite){
+    var wave = waves.create(x, y, sprite);
+    wave.body.immovable = true;
+    wave.body.velocity.x = 300;
+    }

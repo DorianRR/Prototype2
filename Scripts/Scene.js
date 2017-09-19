@@ -29,6 +29,7 @@ function createScene()
 	createDoor(800, 300, 'doorClose');
 	createDoor(200, 468, 'doorClose');
 	createDoor(800, 468, 'doorClose');
+
 }
 
 //Add one platform
@@ -53,3 +54,4 @@ function createDoor(x, y, sprit)
 	var door = doors.create(x, y, sprit);
 	door.body.immovable = true;
 }
+
