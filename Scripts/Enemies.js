@@ -111,13 +111,13 @@ function move(enemy)
 // 	}
 // }
 
-function changeDirection(enemy)
-{
-	if(enemy.direction < 0){
-		enemy.direction = 1;
-	}
-	else{
-		enemy.direction = -1;
-	}
-	console.log("change direction");
-}
+// function changeDirection(enemy)
+// {
+// 	if(enemy.direction < 0){
+// 		enemy.direction = 1;
+// 	}
+// 	else{
+// 		enemy.direction = -1;
+// 	}
+// 	console.log("change direction");
+// }
