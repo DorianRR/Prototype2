@@ -57,7 +57,7 @@ function updatePlayer()
 
     game.physics.arcade.overlap(player, doors, openDoor, null, this);
 
-    if(player.health <= 0 && player.body.touching.down)
+    if(player.health <= 0 )
         player.kill();
 }
 
