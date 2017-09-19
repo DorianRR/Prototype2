@@ -69,6 +69,9 @@ function create(){
 	scoreText.fixedToCamera = true;
 
 	cursors = game.input.keyboard.createCursorKeys();
+	//cursors = game.input.keyboard.addKeys("'space': Phaser.KeyCode.SPACEBAR");
+	cursors.space = game.input.keyboard.addKey(32);
+
 
 	createScene();
 
