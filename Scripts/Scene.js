@@ -21,7 +21,7 @@ function createScene()
 
 	//Add group of doors
 	doors = game.add.group();
-	doors.enableBody = true;
+	//doors.enableBody = true;
 
 	createDoor(200, 100, 'doorClose');
 	createDoor(800, 100, 'doorClose');
@@ -51,5 +51,7 @@ function createRope(x, y, sprite, scaleX)
 function createDoor(x, y, sprit)
 {
 	var door = doors.create(x, y, sprit);
+	door.body = new Phaser.Physics.Arcade.Body(door);
+	door.body.enable = true;
 	door.body.immovable = true;
 }

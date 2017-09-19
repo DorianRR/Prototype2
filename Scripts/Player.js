@@ -67,12 +67,13 @@ function updatePlayer()
 
 function openDoor(player, door)
 {
-    if(cursors.space.isDown){
-    
-        door.loadTexture('doorOpen');
+    //console.log(door.name + " " + door.body.enable);
+    if(cursors.space.isDown){    
+        var openDoor = doors.create(door.x, door.y, "doorOpen");
+        door.destroy(true, true);
+        console.log("open door");
         return false;
-    }
-    
+    }    
     
 }
 
