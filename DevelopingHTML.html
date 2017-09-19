@@ -27,7 +27,7 @@ function preload(){
 	game.load.image('enemy', "assets/Enemy.png");
 	game.load.image('map', "assets/Back.png");
 	game.load.spritesheet('dude','assets/dude.png', 32, 48)
-	game.load.image('star','assets/Enemy.png');
+	game.load.image('star','assets/diamond.png');
 	game.load.image('rope','assets/rope.png');
 	game.load.image('doorOpen', 'assets/door_open.png');
 	game.load.image('doorClose', 'assets/door_close.png');
@@ -89,12 +89,7 @@ function update(){
 	game.physics.arcade.overlap(player, collectible, collectItem, null, this);
 
 	game.camera.follow(player);
-
-}
-
-function render(){
-
-	    game.debug.cameraInfo(game.camera, 32, 32);
+	game.debug.cameraInfo(game.camera, 32, 32);
 
 }
 
@@ -105,9 +100,6 @@ function collectItem(player, collectible){
     scoreText.text = 'Score: ' + score;
 }
 
-
-enemyCat = function (game, x, y, player){
-}
 
 </script>
 </body>

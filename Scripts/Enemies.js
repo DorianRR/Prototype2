@@ -58,7 +58,7 @@ function move(enemy)
     //  Allow the player to jump if they are touching the rope.
     if (hitRope && enemy.body.touching.down)
     {
-        enemy.body.velocity.y = -500;
+        enemy.body.velocity.y = -700;
     }
 
 
