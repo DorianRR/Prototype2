@@ -2,6 +2,7 @@ function createPlayer()
 {
     //add player and its settings
 	player = game.add.sprite(32, game.world.height - 100, 'dude');
+    console.log("Create player");
 
 	//enable physics of player
 	game.physics.arcade.enable(player);
@@ -47,12 +48,22 @@ function updatePlayer()
         player.frame = 4;
     }
     
-        //  Allow the player to jump if they are touching the ground.
-    if (cursors.up.isDown && player.body.touching.down && hitPlatform)
+    var hitRope = game.physics.arcade.collide(player, ropes);
+        //  Allow the player to jump if they are touching the rope.
+    if (hitRope && player.body.touching.down)
     {
-        player.body.velocity.y = -350;
+        player.body.velocity.y = -500;
     }
+
+    game.physics.arcade.overlap(player, doors, openDoor, null, this);
 
     if(player.health <= 0)
         player.kill();
+}
+
+function openDoor(player, door)
+{
+    door.enableBody = false;
+    door.loadTexture('doorOpen');
+
 }
