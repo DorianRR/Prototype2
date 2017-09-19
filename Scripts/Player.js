@@ -21,7 +21,7 @@ function createPlayer()
 function updatePlayer()
 {
 	//  Collide the player with the platforms
-    var hitPlatform = game.physics.arcade.collide(player, platforms);
+    game.physics.arcade.collide(player, platforms);
 
     //  Reset the players velocity
     player.body.velocity.x = 0;

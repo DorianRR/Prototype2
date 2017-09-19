@@ -20,12 +20,11 @@ function updateEnemies()
 	game.physics.arcade.collide(enemies, platforms);
 
 	enemies.forEach(move, this, true);
-	// enemy.body.onWorldBounds = new Phaser.Signal();
-	// console.log("got signal");
-	// enemy.body.onWorldBounds.add(changeDirection, this);
-	// console.log("called CD");
 
-	//game.physics.arcade.collide(enemies, platforms);
+	//This is the signal for enemies bounding off walls
+	enemy.body.onWorldBounds = new Phaser.Signal();
+	onWorldBounds.add(changeDirection, this);
+	onWorldBounds.dispatch(changeDirection, this);
 }
 
 
@@ -67,16 +66,16 @@ function move(enemy)
     {
         enemy.body.velocity.y = -550;
     }
-	else if(enemy.world.x < 5){
-			console.log("change direction");
+	// else if(enemy.world.x < 5){
+	// 		console.log("change direction");
 
-			enemy.direction = 1;
-	}
-	else if(enemy.world.x > 1165){
-			console.log("change direction");
+	// 		enemy.direction = 1;
+	// }
+	// else if(enemy.world.x > 1165){
+	// 		console.log("change direction");
 
-			enemy.direction = -1;
-	}
+	// 		enemy.direction = -1;
+	// }
    else if(player.body.touching.down && Math.abs(player.world.y - enemy.world.y) < 50)
 	{
 		if(enemy.x > player.x)
@@ -111,13 +110,13 @@ function move(enemy)
 // 	}
 // }
 
-// function changeDirection(enemy)
-// {
-// 	if(enemy.direction < 0){
-// 		enemy.direction = 1;
-// 	}
-// 	else{
-// 		enemy.direction = -1;
-// 	}
-// 	console.log("change direction");
-// }
+function changeDirection(enemy)
+{
+	if(enemy.direction < 0){
+		enemy.direction = 1;
+	}
+	else{
+		enemy.direction = -1;
+	}
+	console.log("change direction");
+}
