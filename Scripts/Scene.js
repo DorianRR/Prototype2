@@ -1,8 +1,8 @@
 
 function createScene()
 {
+	//Add group of platforms
 	platforms = game.add.group();
-
 	platforms.enableBody = true;
 
 	createPlatform(0, game.world.height -32, 'ground', 1, 1);
@@ -12,12 +12,14 @@ function createScene()
 	createPlatform(600, 400, 'ground', 1, 1);
 	createPlatform(600, game.world.height -32, 'ground', 1, 1);
 
+	//Add group of ropes
 	ropes = game.add.group();
 	ropes.enableBody = true;
 
 	createRope(400, game.world.height -10, 'rope', 1);
 	createRope(1000, game.world.height -10, 'rope', 1);
 
+	//Add group of doors
 	doors = game.add.group();
 	doors.enableBody = true;
 
@@ -29,6 +31,7 @@ function createScene()
 	createDoor(800, 468, 'doorClose');
 }
 
+//Add one platform
 function createPlatform(x, y, sprite, scaleX, scaleY)
 {
 	var platform = platforms.create(x, y, sprite);
@@ -36,6 +39,7 @@ function createPlatform(x, y, sprite, scaleX, scaleY)
 	platform.body.immovable = true;
 }
 
+//Add one rope
 function createRope(x, y, sprite, scaleX)
 {
 	var rope = ropes.create(x, y, sprite);
@@ -43,6 +47,7 @@ function createRope(x, y, sprite, scaleX)
 	rope.body.immovable = true;
 }
 
+//Add one door
 function createDoor(x, y, sprit)
 {
 	var door = doors.create(x, y, sprit);
