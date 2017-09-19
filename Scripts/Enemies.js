@@ -11,7 +11,6 @@ function createEnemies()
 }
 
 var hitPlatform; 
-var enemy;
 
 function updateEnemies()
 {
@@ -33,7 +32,7 @@ function updateEnemies()
 //create one enemy at (x, y)
 function createEnemy(x, y)
 {
-	enemy = enemies.create(x, y, 'enemy');
+	var enemy = enemies.create(x, y, 'enemy');
 
 	game.physics.arcade.enable(enemy);
 
@@ -62,12 +61,13 @@ function hitEnemy(player, enemy)
 function move(enemy)
 {
 	var hitRope = game.physics.arcade.collide(enemy, ropes);
+
     //  Allow the player to jump if they are touching the rope.
     if (hitRope && enemy.body.touching.down)
     {
-        enemy.body.velocity.y = -500;
+        enemy.body.velocity.y = -550;
     }
-	if(enemy.world.x < 5){
+	else if(enemy.world.x < 5){
 			console.log("change direction");
 
 			enemy.direction = 1;
@@ -77,20 +77,15 @@ function move(enemy)
 
 			enemy.direction = -1;
 	}
-    else if(Math.round(player.world.y) == (Math.round(this.y))){
-
-
-	    if(player.body.touching.down && !hitPlatform)
-	    {
-		    if(enemy.x > player.x)
-		    	enemy.direction = -1;
-		    else
-		    	enemy.direction = 1;
-	    }  	
-	
-	}
+   else if(player.body.touching.down && Math.abs(player.world.y - enemy.world.y) < 50)
+	{
+		if(enemy.x > player.x)
+		    enemy.direction = -1;
+		else
+		    enemy.direction = 1;    
+	}  	
     //console.log(enemy.directon);
-    enemy.body.velocity.x = enemy.direction * 100;
+    enemy.body.velocity.x = enemy.direction * 125;
 
 
 }
