@@ -44,11 +44,11 @@ function updatePlayer()
     {
         //  Move to the left
         player.body.velocity.x = -150;
-
         player.animations.play('left');
-        if(cursors.space.isDown && runTimer <= 50){
+
+            //Dash code
+        if(cursors.space.isDown && runTimer <= 100){
             runTimer ++;
-            console.log(runTimer);
             player.body.velocity.x *= 2;
         }
     }
@@ -56,11 +56,11 @@ function updatePlayer()
     {
         //  Move to the right
         player.body.velocity.x = 150;
-
         player.animations.play('right');
-        if(cursors.space.isDown && runTimer <= 50){
+
+        //Dash code
+        if(cursors.space.isDown && runTimer <= 100){
             runTimer ++;
-            console.log(runTimer);
             player.body.velocity.x *= 2;
         }
     }
@@ -109,5 +109,5 @@ function createWave(x, y, sprite){
     }
 
 function runCooldown(){
-    
+
 }
