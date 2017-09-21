@@ -143,7 +143,7 @@ function pickBomb(player, bomb)
             //add the bomb as playe's child
             bomb = game.make.sprite(0, 0, 'bomb');
             player.addChild(bomb);
-            console.log("pick");
+            console.log("Pick bomb");
             dropTime = 500;
         }
     }

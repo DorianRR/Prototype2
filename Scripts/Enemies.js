@@ -38,16 +38,17 @@ function createEnemy(x, y)
 	//enemy can't go off world bounds
 	enemy.body.collideWorldBounds = true;
 
-
 	enemy.body.gravity.y = 350;
 	enemy.direction = game.rnd.integerInRange(0,1) * 2 - 1;
 
+	enemy.isStunned = false;
+	enemy.stunnedTime = 5000;
 }
 
 //callback function when player hits with enemy
 function hitEnemy(player, enemy)
 {
-	console.log(player.isDashing);
+	//console.log(player.isDashing);
 	if(player.body.touching.down && !player.isDashing)
 	{
 		player.health--;
@@ -85,5 +86,18 @@ function move(enemy)
     //console.log(enemy.directon);
     enemy.body.velocity.x = enemy.direction * 125;
 
+    //can't move when stunned
+    if(enemy.isStunned)
+    {
+    	enemy.body.velocity.x = 0;
+    	enemy.body.velocity.y = 0;
+    	enemy.stunnedTime -= game.time.elapsed;
+    }
 
+    //reset time
+    if(enemy.stunnedTime <= 0)
+    {
+    	enemy.isStunned = false;
+    	enemy.stunnedTime = 5000;
+    }
 }

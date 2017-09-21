@@ -69,10 +69,20 @@ function createBomb(x, y, sprite)
 	bomb.body.gravity.y = 300;
 	bomb.time = 5000;
 	bomb.onFire = false;
-	 bomb.explode = function(){
-	 		console.log("Explode");
-	 		this.kill();
-	 	};
+
+	bomb.explode = function(){
+		if(bomb.onFire){
+			console.log("Explode");
+	 		//explosion area is 2x
+	 		bomb.scale.setTo(2);
+	 		//kill all enemis nearby
+	 		game.physics.arcade.overlap(bomb, enemies, function(bomb, enemy){
+	 			enemy.isStunned = true;
+	 		},null, this);
+	 		//clear bomb
+	 		bomb.kill();
+		}
+ 	};
 	return bomb;
 }
 
@@ -99,5 +109,7 @@ function updateBomb(bomb)
 	//bounce bomb when hits the trampline
 	if(bombHitRope && bomb.body.touching.down)
 		bomb.body.velocity.y = -400;
+
+	game.physics.arcade.overlap(bombs, enemies, bomb.explode, bomb.explode, this);
 
 }
