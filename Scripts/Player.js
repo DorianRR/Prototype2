@@ -20,6 +20,11 @@ function createPlayer()
     waves = game.add.group();
     waves.enableBody = true;
 
+    // timer = game.time.create(false);
+    runTimer = 0;
+    var timer;
+    timer = game.time.create(false);
+
 
 }
 
@@ -41,6 +46,11 @@ function updatePlayer()
         player.body.velocity.x = -150;
 
         player.animations.play('left');
+        if(cursors.space.isDown && runTimer <= 50){
+            runTimer ++;
+            console.log(runTimer);
+            player.body.velocity.x *= 2;
+        }
     }
     else if (cursors.right.isDown)
     {
@@ -48,7 +58,13 @@ function updatePlayer()
         player.body.velocity.x = 150;
 
         player.animations.play('right');
+        if(cursors.space.isDown && runTimer <= 50){
+            runTimer ++;
+            console.log(runTimer);
+            player.body.velocity.x *= 2;
+        }
     }
+   
     else
     {
         //  Stand still
@@ -91,3 +107,7 @@ function createWave(x, y, sprite){
     wave.body.immovable = true;
     wave.body.velocity.x = 300;
     }
+
+function runCooldown(){
+    
+}
