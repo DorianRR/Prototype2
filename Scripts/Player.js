@@ -86,7 +86,8 @@ function openDoor(player, door)
 }
 
 function createWave(x, y, sprite){
-    var wave = waves.create(x, y, sprite);
+    var wave = waves.create(x , y - 20, sprite);
+    wave.scale.setTo(2);
     wave.body.immovable = true;
     wave.body.velocity.x = 300;
     }
