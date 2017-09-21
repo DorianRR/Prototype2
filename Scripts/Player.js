@@ -50,13 +50,11 @@ function updatePlayer()
             runTimer ++;
             player.body.velocity.x *= 2;
         }
-        
-
-    }
-    if (runTimer >= 100){
-            runTimer = 0;
-            // isDashing = false;
+        else{
+            player.isDashing = false;
         }
+    }
+    
 
     else if (cursors.right.isDown)
     {
@@ -69,6 +67,9 @@ function updatePlayer()
             player.isDashing = true;
             runTimer ++;
             player.body.velocity.x *= 2;
+        }
+        else{
+            player.isDashing = false
         }
     }
     
@@ -90,10 +91,8 @@ function updatePlayer()
     
    // game.physics.arcade.overlap(player, doors, openDoor, null, this);
 
-    
     if(player.health <= 0 )
         player.kill();
-    // console.log(isDashing);
 }
 
 function openDoor(player, door)
