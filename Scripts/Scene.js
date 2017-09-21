@@ -30,6 +30,11 @@ function createScene()
 	createDoor(200, 468, 'doorClose');
 	createDoor(800, 468, 'doorClose');
 
+	bombs = game.add.group();
+	bombs.enableBody = true;
+
+	for(var i = 0; i < 5; i++)
+		createBomb(game.rnd.integerInRange(0, game.width), game.rnd.integerInRange(0, game.height), 'bomb');
 }
 
 //Add one platform
@@ -57,3 +62,42 @@ function createDoor(x, y, sprit)
 	door.body.immovable = true;
 }
 
+//Add one bomb
+function createBomb(x, y, sprite)
+{
+	var bomb = bombs.create(x, y, sprite);
+	bomb.body.gravity.y = 300;
+	bomb.time = 5000;
+	bomb.onFire = false;
+	 bomb.explode = function(){
+	 		console.log("Explode");
+	 		this.kill();
+	 	};
+	return bomb;
+}
+
+//update scene
+function updateScene()
+{
+	 bombs.forEach(updateBomb, this, true);
+}
+
+function updateBomb(bomb)
+{
+	 if(bomb.onFire == true)
+	 	bomb.time -= game.time.elapsed;
+	 if(bomb.time <= 0)
+	 	bomb.explode();
+
+	var bombHitPlat = game.physics.arcade.collide(bomb, platforms);
+	var bombHitRope = game.physics.arcade.collide(bomb, ropes);
+
+	//stop bomb when hits the platform
+	if(bombHitPlat && bomb.body.touching.down)
+		bomb.body.velocity.x = 0;
+
+	//bounce bomb when hits the trampline
+	if(bombHitRope && bomb.body.touching.down)
+		bomb.body.velocity.y = -400;
+
+}

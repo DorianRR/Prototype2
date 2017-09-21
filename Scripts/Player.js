@@ -1,3 +1,5 @@
+var dropTime = 500;
+
 function createPlayer()
 {
     //add player and its settings
@@ -25,6 +27,7 @@ function createPlayer()
     var timer;
     timer = game.time.create(false);
 
+    player.bomb = Object();
 
 }
 
@@ -35,7 +38,14 @@ function updatePlayer()
     game.physics.arcade.collide(player, platforms);
     game.physics.arcade.collide(player, doors, openDoor, openDoor, this);
     game.physics.arcade.collide(waves, enemies);
+    game.physics.arcade.overlap(player, bombs, pickBomb, pickBomb, this);
 
+    if(cursors.down.isDown)
+        dropBomb();
+
+
+    if(player.children != null)
+        dropTime -= game.time.elapsed;
 
     //  Reset the players velocity
     player.body.velocity.x = 0;
@@ -80,14 +90,14 @@ function updatePlayer()
         player.body.velocity.y = -500;
     }
     
-   // game.physics.arcade.overlap(player, doors, openDoor, null, this);
-
+   // game.physics.arcade.overlap(player, doors, openDoor, null, this);   
     
 
     if(player.health <= 0 )
         player.kill();
 }
 
+//Open a door
 function openDoor(player, door)
 {
     if(cursors.space.isDown){    
@@ -109,5 +119,41 @@ function createWave(x, y, sprite){
     }
 
 function runCooldown(){
+
+}
+
+//pick a bomb
+function pickBomb(player, bomb)
+{
+    if(cursors.down.isDown)
+    {
+        if(player.children.length == 0 && dropTime <= 0)
+        {
+            bombs.removeChild(bomb);
+            //add the bomb as playe's child
+            bomb = game.make.sprite(0, 0, 'bomb');
+            player.addChild(bomb);
+            console.log("pick");
+            dropTime = 500;
+        }
+    }
+}
+
+//drop a bomb
+function dropBomb()
+{
+    if(player.children.length != 0 && dropTime <= 0)
+    {
+        //remove the bomb as the playe's child
+        player.removeChild(player.getChildAt(0));
+        //create a new bomb sprite
+        var bomb = createBomb(player.x, player.y, 'bomb')
+        //set velocity and gravity
+        bomb.body.velocity.y = -100;
+        bomb.body.velocity.x = player.body.velocity.x;
+        //set onFire
+        bomb.onFire = true;
+        dropTime = 500;
+    }
 
 }

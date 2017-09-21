@@ -86,35 +86,3 @@ function move(enemy)
 
 
 }
-
-// function choosePath(enemy, platform)
-// {
-// 	if(enemy.body.touching.down &&  Math.abs(player.y - enemy.y) >= 10)
-// 	{
-// 		var leftDistance = Math.abs(enemy.x - platform.x)  +  Math.abs(player.x - platform.x);
-// 		var rightDistance = Math.abs(platform.x + platform.width - enemy.x) + Math.abs(player.x - platform.x + platform.width);
-// 		if(leftDistance > rightDistance)
-// 			enemy.direction = -1;
-// 		else
-// 			enemy.direction = 1;	
-// 		console.log(leftDistance + " " + rightDistance);
-// 	}
-// 	else
-// 	{
-// 		if(player.x > enemy.x)
-// 			direction = 1;
-// 		else
-// 			direction = -1;
-// 	}
-// }
-
-// function changeDirection(enemy)
-// {
-// 	// enem.direction = enemy.direction * -1;
-// 	if(enemy.direction < 0){
-// 		enemy.direction = 1;
-// 	}
-// 	else{
-// 		enemy.direction = -1;
-// 	}
-// }
