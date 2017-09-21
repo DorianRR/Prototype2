@@ -22,9 +22,7 @@ function createPlayer()
 
     // timer = game.time.create(false);
     runTimer = 0;
-    var timer;
-    timer = game.time.create(false);
-
+    player.isDashing = false;
 
 }
 
@@ -48,10 +46,18 @@ function updatePlayer()
 
             //Dash code
         if(cursors.space.isDown && runTimer <= 100){
+            player.isDashing = true;
             runTimer ++;
             player.body.velocity.x *= 2;
         }
+        
+
     }
+    if (runTimer >= 100){
+            runTimer = 0;
+            // isDashing = false;
+        }
+
     else if (cursors.right.isDown)
     {
         //  Move to the right
@@ -60,11 +66,13 @@ function updatePlayer()
 
         //Dash code
         if(cursors.space.isDown && runTimer <= 100){
+            player.isDashing = true;
             runTimer ++;
             player.body.velocity.x *= 2;
         }
     }
-   
+    
+
     else
     {
         //  Stand still
@@ -83,9 +91,9 @@ function updatePlayer()
    // game.physics.arcade.overlap(player, doors, openDoor, null, this);
 
     
-
     if(player.health <= 0 )
         player.kill();
+    // console.log(isDashing);
 }
 
 function openDoor(player, door)
@@ -108,6 +116,3 @@ function createWave(x, y, sprite){
     wave.body.velocity.x = 300;
     }
 
-function runCooldown(){
-
-}

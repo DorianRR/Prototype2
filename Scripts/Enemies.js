@@ -47,7 +47,8 @@ function createEnemy(x, y)
 //callback function when player hits with enemy
 function hitEnemy(player, enemy)
 {
-	if(player.body.touching.down)
+	console.log(player.isDashing);
+	if(player.body.touching.down && !player.isDashing)
 	{
 		player.health--;
 		enemy.kill();
