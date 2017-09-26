@@ -3,7 +3,7 @@ var dropTime = 500;
 function createPlayer()
 {
     //add player and its settings
-	player = game.add.sprite(32, game.world.height - 100, 'dude');
+	player = game.add.sprite(game.world.width/2, game.world.height/2, 'dude');
     console.log("Create player");
 
 	//enable physics of player
@@ -128,9 +128,7 @@ function createWave(x, y, sprite){
     wave.body.velocity.x = 300;
     }
 
-function runCooldown(){
 
-}
 
 //pick a bomb
 function pickBomb(player, bomb)
