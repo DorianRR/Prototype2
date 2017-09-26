@@ -24,7 +24,7 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, '', {preload: preload, create:
 function preload(){
 
 	game.load.image('ground', 'assets/platform.png')
-	game.load.image('enemy', "assets/Cat_anime.png");
+	game.load.spritesheet('enemy', 'assets/CatAni Sprite TEST.png', 49, 39);
 	game.load.image('map', "assets/Map.png");
 	game.load.spritesheet('dude','assets/dude.png', 32, 48)
 	game.load.image('star','assets/star.png');

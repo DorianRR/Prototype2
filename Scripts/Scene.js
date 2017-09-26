@@ -65,7 +65,7 @@ function createScene()
 	collectible.enableBody = true;
 
 	for (var i = 0; i < 13; i++){
-		createStar(game.rnd.integerInRange(0, game.width), game.rnd.integerInRange(0, game.height), 'star')
+		createCheese(game.rnd.integerInRange(0, game.width), game.rnd.integerInRange(0, game.height), 'star')
 	}
 
 }
@@ -119,11 +119,16 @@ function createBomb(x, y, sprite)
 	return bomb;
 }
 
-function createStar(x, y, sprite)
+function createCheese(x, y, sprite)
 {
-	var star = collectible.create(x, y, sprite);
-	star.body.gravity.y = 300;
-	star.body.angularVelocity = 300;
+	var cheese = collectible.create(x, y, sprite);
+	cheese.body.gravity.y = 300;
+	//set anchor to center
+	cheese.anchor.setTo(0.5, 0.5);
+	cheese.body.angularVelocity = 300;
+	cheese.body.velocity.x = 50;
+	// cheese.body.angularDrag = 50;
+	// cheese.body.angularAcceleration = 200;
 }
 
 //update scene
