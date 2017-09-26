@@ -102,20 +102,25 @@ function createBomb(x, y, sprite)
 	bomb.body.gravity.y = 300;
 	bomb.time = 5000;
 	bomb.onFire = false;
+		bomb.explode = function(enemy){
+		if(enemy)
+			enemy.isStunned = true;
+	 	//clear bomb
+	 	bomb.kill();
+ 	};
 
-	bomb.explode = function(){
+	bomb.detectEnemy = function(){
 		if(bomb.onFire){
 			console.log("Explode");
 	 		//explosion area is 2x
 	 		bomb.scale.setTo(2);
 	 		//kill all enemis nearby
 	 		game.physics.arcade.overlap(bomb, enemies, function(bomb, enemy){
-	 			enemy.isStunned = true;
+	 			bomb.explode(enemy);
 	 		},null, this);
-	 		//clear bomb
-	 		bomb.kill();
 		}
- 	};
+	}
+
 	return bomb;
 }
 
@@ -144,7 +149,7 @@ function updateBomb(bomb)
 	 if(bomb.onFire == true)
 	 	bomb.time -= game.time.elapsed;
 	 if(bomb.time <= 0)
-	 	bomb.explode();
+	 	bomb.explode(null);
 
 	var bombHitPlat = game.physics.arcade.collide(bomb, platforms);
 	var bombHitRope = game.physics.arcade.collide(bomb, ropes);
@@ -157,7 +162,7 @@ function updateBomb(bomb)
 	if(bombHitRope && bomb.body.touching.down)
 		bomb.body.velocity.y = -400;
 
-	game.physics.arcade.overlap(bombs, enemies, bomb.explode, bomb.explode, this);
+	game.physics.arcade.overlap(bombs, enemies, bomb.detectEnemy, bomb.detectEnemy, this);
 
 }
 
