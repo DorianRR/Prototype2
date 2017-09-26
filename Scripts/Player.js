@@ -2,6 +2,7 @@ var dropTime = 500;
 
 function createPlayer()
 {
+
     //add player and its settings
 	player = game.add.sprite(game.world.width/2, game.world.height/2, 'dude');
     console.log("Create player");
@@ -33,6 +34,8 @@ function createPlayer()
 
 function updatePlayer()
 {
+
+
 	//  Collide the player with the platforms
     
     game.physics.arcade.collide(player, platforms);

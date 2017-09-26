@@ -71,15 +71,13 @@ function move(enemy)
         enemy.body.velocity.y = -550;
     }
 	else if(enemy.world.x < 5){
-			console.log("change direction");
-			enemy.animations.play('right');
 			enemy.direction = 1;
 	}
 	else if(enemy.world.x > 1165){
-			console.log("change direction");
 			enemy.animations.play('right');
-			enemy.direction = -1;
+			enemy.direction = 1;
 	}
+
    else if(player.body.touching.down && Math.abs(player.world.y - enemy.world.y) < 50)
 	{
 		if(enemy.x > player.x){
