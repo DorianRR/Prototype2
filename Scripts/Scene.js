@@ -60,14 +60,6 @@ function createScene()
 
 	for(var i = 0; i < 5; i++)
 		createBomb(game.rnd.integerInRange(0, game.width), game.rnd.integerInRange(0, game.height), 'bomb');
-
-	collectible = game.add.group();
-	collectible.enableBody = true;
-
-	for (var i = 0; i < 13; i++){
-		createCheese(game.rnd.integerInRange(0, game.width), game.rnd.integerInRange(0, game.height), 'star')
-	}
-
 }
 
 //Add one platform
@@ -102,46 +94,27 @@ function createBomb(x, y, sprite)
 	bomb.body.gravity.y = 300;
 	bomb.time = 5000;
 	bomb.onFire = false;
-		bomb.explode = function(enemy){
-		if(enemy)
-			enemy.isStunned = true;
-	 	//clear bomb
-	 	bomb.kill();
- 	};
 
-	bomb.detectEnemy = function(){
+	bomb.explode = function(){
 		if(bomb.onFire){
 			console.log("Explode");
 	 		//explosion area is 2x
 	 		bomb.scale.setTo(2);
 	 		//kill all enemis nearby
 	 		game.physics.arcade.overlap(bomb, enemies, function(bomb, enemy){
-	 			bomb.explode(enemy);
+	 			enemy.isStunned = true;
 	 		},null, this);
+	 		//clear bomb
+	 		bomb.kill();
 		}
-	}
-
+ 	};
 	return bomb;
-}
-
-function createCheese(x, y, sprite)
-{
-	var cheese = collectible.create(x, y, sprite);
-	cheese.body.gravity.y = 300;
-	//set anchor to center
-	cheese.anchor.setTo(0.5, 0.5);
-	cheese.body.angularVelocity = 300;
-	cheese.body.velocity.x = 50;
-	// cheese.body.angularDrag = 50;
-	// cheese.body.angularAcceleration = 200;
 }
 
 //update scene
 function updateScene()
 {
-	bombs.forEach(updateBomb, this, true);
-	game.physics.arcade.collide(collectible, platforms);
-	game.physics.arcade.overlap(player, collectible, collectItem, null, this);
+	 bombs.forEach(updateBomb, this, true);
 }
 
 function updateBomb(bomb)
@@ -149,7 +122,7 @@ function updateBomb(bomb)
 	 if(bomb.onFire == true)
 	 	bomb.time -= game.time.elapsed;
 	 if(bomb.time <= 0)
-	 	bomb.explode(null);
+	 	bomb.explode();
 
 	var bombHitPlat = game.physics.arcade.collide(bomb, platforms);
 	var bombHitRope = game.physics.arcade.collide(bomb, ropes);
@@ -162,13 +135,6 @@ function updateBomb(bomb)
 	if(bombHitRope && bomb.body.touching.down)
 		bomb.body.velocity.y = -400;
 
-	game.physics.arcade.overlap(bombs, enemies, bomb.detectEnemy, bomb.detectEnemy, this);
+	game.physics.arcade.overlap(bombs, enemies, bomb.explode, bomb.explode, this);
 
-}
-
-function collectItem(player, collectible){
-	collectible.kill();
-	
-	score += 10;
-    scoreText.text = 'Score: ' + score;
 }

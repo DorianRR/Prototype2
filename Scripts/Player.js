@@ -68,10 +68,10 @@ function updatePlayer()
         
 
     }
-    // if (runTimer >= 100){
-    //         runTimer = 0;
-    //         // isDashing = false;
-    //     }
+    if (runTimer >= 100){
+            runTimer = 0;
+            // isDashing = false;
+        }
 
     else if (cursors.right.isDown)
     {
