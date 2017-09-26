@@ -25,7 +25,7 @@ function preload(){
 
 	game.load.image('ground', 'assets/platform.png')
 	game.load.image('enemy', "assets/Enemy.png");
-	game.load.image('map', "assets/Back.png");
+	game.load.image('map', "assets/BG_Mao.jpg");
 	game.load.spritesheet('dude','assets/dude.png', 32, 48)
 	game.load.image('star','assets/diamond.png');
 	game.load.image('rope','assets/rope.png');
@@ -55,8 +55,8 @@ function create(){
 
 	game.physics.startSystem(Phaser.Physics.ARCADE);
 
-	map = game.add.tileSprite(0,0, 1200, 600,'map');
-	game.world.setBounds(0,0,1200,600);
+	map = game.add.tileSprite(0,0, 1600, 600,'map');
+	game.world.setBounds(0,0,1600,600);
 	game.add.sprite(0,0,'enemy');
 
 
