@@ -5,30 +5,42 @@ function createScene()
 	platforms = game.add.group();
 	platforms.enableBody = true;
 
-	createPlatform(0, game.world.height -32, 'ground', 1, 1);
-	createPlatform(0, 200, 'ground', 1, 1);
-	createPlatform(0, 400, 'ground', 1, 1);
-	createPlatform(600, 200, 'ground', 1, 1);
-	createPlatform(600, 400, 'ground', 1, 1);
-	createPlatform(600, game.world.height -32, 'ground', 1, 1);
+	createPlatform(0, game.world.height -32, 'ground', .4, 1);
+	//createPlatform(0, game.world.height -32, 'ground', .4, .5);
+	createPlatform(0, game.world.height -140, 'ground', .4, .5);
+	createPlatform(0, game.world.height -245, 'ground', .4, .5);
+	createPlatform(0, game.world.height -354, 'ground', .4, .5);
+	createPlatform(0, game.world.height -464, 'ground', .38, .5);
+
+
+	createPlatform(359, game.world.height -140, 'ground', .8, .5);
+	createPlatform(359, game.world.height -245, 'ground', .8, .5);
+	createPlatform(359, game.world.height -355, 'ground', .8, .5);
+	createPlatform(359, game.world.height -464, 'ground', .8, .5);
+
+
+	createPlatform(360, game.world.height -32, 'ground', 1, 1);
 
 	//Add group of ropes
 	ropes = game.add.group();
 	ropes.enableBody = true;
 
-	createRope(400, game.world.height -10, 'rope', 1);
-	createRope(1000, game.world.height -10, 'rope', 1);
+	createRope(161, game.world.height -10, 'rope', 1);
+	createRope(161, game.world.height -245, 'rope', .98);
+	createRope(682, game.world.height -140, 'rope', 1.27);
+
+	createRope(1196, game.world.height -30, 'rope', .75);
 
 	//Add group of doors
 	doors = game.add.group();
 	//doors.enableBody = true;
 
-	createDoor(200, 100, 'doorClose');
-	createDoor(800, 100, 'doorClose');
-	createDoor(200, 300, 'doorClose');
-	createDoor(800, 300, 'doorClose');
-	createDoor(200, 468, 'doorClose');
-	createDoor(800, 468, 'doorClose');
+	// createDoor(200, 100, 'doorClose');
+	// createDoor(800, 100, 'doorClose');
+	// createDoor(200, 300, 'doorClose');
+	// createDoor(800, 300, 'doorClose');
+	// createDoor(200, 468, 'doorClose');
+	// createDoor(800, 468, 'doorClose');
 
 	bombs = game.add.group();
 	bombs.enableBody = true;
