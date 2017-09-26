@@ -18,8 +18,21 @@ function createScene()
 	createPlatform(359, game.world.height -355, 'ground', .8, .5);
 	createPlatform(359, game.world.height -464, 'ground', .8, .5);
 
+	createPlatform(935, game.world.height -140, 'ground', .65, .5);
+	createPlatform(935, game.world.height -245, 'ground', .65, .5);
+	createPlatform(935, game.world.height -355, 'ground', .65, .5);
+	createPlatform(935, game.world.height -464, 'ground', .65, .5);
+
+	createPlatform(1364, game.world.height -140, 'ground', .65, .5);
+	createPlatform(1364, game.world.height -245, 'ground', .65, .5);
+	createPlatform(1364, game.world.height -355, 'ground', .65, .5);
+	createPlatform(1364, game.world.height -464, 'ground', .65, .5);
 
 	createPlatform(360, game.world.height -32, 'ground', 1, 1);
+	createPlatform(935, game.world.height -32, 'ground', .65, 1);
+	createPlatform(1366, game.world.height -32, 'ground', .65, 1);
+	createPlatform(0, 226, 'ground', 100, .5);
+
 
 	//Add group of ropes
 	ropes = game.add.group();
@@ -27,9 +40,9 @@ function createScene()
 
 	createRope(161, game.world.height -10, 'rope', 1);
 	createRope(161, game.world.height -245, 'rope', .98);
-	createRope(682, game.world.height -140, 'rope', 1.27);
+	createRope(680, game.world.height -140, 'rope', 1.27);
 
-	createRope(1196, game.world.height -30, 'rope', .75);
+	createRope(1196, game.world.height -10, 'rope', .85);
 
 	//Add group of doors
 	doors = game.add.group();
