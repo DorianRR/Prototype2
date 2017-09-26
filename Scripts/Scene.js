@@ -35,6 +35,14 @@ function createScene()
 
 	for(var i = 0; i < 5; i++)
 		createBomb(game.rnd.integerInRange(0, game.width), game.rnd.integerInRange(0, game.height), 'bomb');
+
+	collectible = game.add.group();
+	collectible.enableBody = true;
+
+	for (var i = 0; i < 13; i++){
+		createStar(game.rnd.integerInRange(0, game.width), game.rnd.integerInRange(0, game.height), 'star')
+	}
+
 }
 
 //Add one platform
@@ -86,10 +94,19 @@ function createBomb(x, y, sprite)
 	return bomb;
 }
 
+function createStar(x, y, sprite)
+{
+	var star = collectible.create(x, y, sprite);
+	star.body.gravity.y = 300;
+	star.body.angularVelocity = 300;
+}
+
 //update scene
 function updateScene()
 {
-	 bombs.forEach(updateBomb, this, true);
+	bombs.forEach(updateBomb, this, true);
+	game.physics.arcade.collide(collectible, platforms);
+	game.physics.arcade.overlap(player, collectible, collectItem, null, this);
 }
 
 function updateBomb(bomb)
@@ -112,4 +129,11 @@ function updateBomb(bomb)
 
 	game.physics.arcade.overlap(bombs, enemies, bomb.explode, bomb.explode, this);
 
+}
+
+function collectItem(player, collectible){
+	collectible.kill();
+	
+	score += 10;
+    scoreText.text = 'Score: ' + score;
 }
