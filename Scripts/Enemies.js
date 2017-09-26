@@ -43,13 +43,17 @@ function createEnemy(x, y)
 
 	enemy.isStunned = false;
 	enemy.stunnedTime = 5000;
+
+	//set animations
+	enemy.animations.add('right', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 20, true);
+
 }
 
 //callback function when player hits with enemy
 function hitEnemy(player, enemy)
 {
 	//console.log(player.isDashing);
-	if(player.body.touching.down && !player.isDashing)
+	if(player.body.touching.down && !player.isDashing && !enemy.isStunned)
 	{
 		player.health--;
 		enemy.kill();
@@ -67,17 +71,31 @@ function move(enemy)
         enemy.body.velocity.y = -550;
     }
 	else if(enemy.world.x < 5){
+<<<<<<< HEAD
 			enemy.direction = 1;
 	}
 	else if(enemy.world.x > 1165){
+=======
+			console.log("change direction");
+			enemy.animations.play('right');
+			enemy.direction = 1;
+	}
+	else if(enemy.world.x > 1165){
+			console.log("change direction");
+			enemy.animations.play('right');
+>>>>>>> master
 			enemy.direction = -1;
 	}
    else if(player.body.touching.down && Math.abs(player.world.y - enemy.world.y) < 50)
 	{
-		if(enemy.x > player.x)
+		if(enemy.x > player.x){
+			enemy.animations.play('right');
 		    enemy.direction = -1;
-		else
+		}
+		else{
+			enemy.animations.play('right');
 		    enemy.direction = 1;    
+		}
 	}  	
     //console.log(enemy.directon);
     enemy.body.velocity.x = enemy.direction * 125;
@@ -87,6 +105,7 @@ function move(enemy)
     {
     	enemy.body.velocity.x = 0;
     	enemy.body.velocity.y = 0;
+    	enemy.animations.stop();
     	enemy.stunnedTime -= game.time.elapsed;
     }
 
