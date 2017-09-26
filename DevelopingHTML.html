@@ -27,12 +27,12 @@ function preload(){
 	game.load.image('enemy', "assets/Enemy.png");
 	game.load.image('map', "assets/Back.png");
 	game.load.spritesheet('dude','assets/dude.png', 32, 48)
-	game.load.image('star','assets/diamond.png');
 	game.load.image('rope','assets/rope.png');
 	game.load.image('doorOpen', 'assets/door_open.png');
 	game.load.image('doorClose', 'assets/door_close.png');
 	game.load.image('wave', 'assets/firstaid.png');
 	game.load.image('bomb', 'assets/diamond.png');
+	game.load.image('star', 'assets/star.png');
 
 }
 
@@ -49,6 +49,13 @@ var collectible;
 var score = 0;
 var scoreText;
 var map;
+var items;
+var itemType = {
+	NONE: "NONE",
+	KILL: "KILL"
+};
+var status = itemType.NONE;
+var timer = 5000;
 
 
 function create(){

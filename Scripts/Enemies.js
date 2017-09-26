@@ -55,6 +55,10 @@ function hitEnemy(player, enemy)
 		enemy.kill();
 		console.log(player.health);
 	}
+	if(status == itemType.KILL)
+	{
+		enemy.kill();
+	}
 }
 
 function move(enemy)
@@ -81,7 +85,9 @@ function move(enemy)
 		if(enemy.x > player.x)
 		    enemy.direction = -1;
 		else
-		    enemy.direction = 1;    
+		    enemy.direction = 1;   
+		if(status == itemType.KILL)
+			enemy.direction = -enemy.direction; 
 	}  	
     //console.log(enemy.directon);
     enemy.body.velocity.x = enemy.direction * 125;
