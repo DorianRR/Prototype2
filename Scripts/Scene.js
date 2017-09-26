@@ -59,13 +59,13 @@ function createScene()
 	bombs.enableBody = true;
 
 	for(var i = 0; i < 5; i++)
-		createBomb(game.rnd.integerInRange(0, game.width), game.rnd.integerInRange(0, game.height), 'bomb');
+		createBomb(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(0, game.height), 'bomb');
 
 	collectible = game.add.group();
 	collectible.enableBody = true;
 
-	for (var i = 0; i < 13; i++){
-		createCheese(game.rnd.integerInRange(0, game.width), game.rnd.integerInRange(0, game.height), 'star')
+	for (var i = 0; i < 10; i++){
+		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(0, game.height), 'star')
 	}
 
 }
@@ -103,6 +103,7 @@ function createBomb(x, y, sprite)
 	bomb.time = 5000;
 	bomb.onFire = false;
 		bomb.explode = function(enemy){
+		console.log("Explode");
 		if(enemy)
 			enemy.isStunned = true;
 	 	//clear bomb
@@ -111,9 +112,8 @@ function createBomb(x, y, sprite)
 
 	bomb.detectEnemy = function(){
 		if(bomb.onFire){
-			console.log("Explode");
 	 		//explosion area is 2x
-	 		bomb.scale.setTo(2);
+	 		//bomb.scale.setTo(2);
 	 		//kill all enemis nearby
 	 		game.physics.arcade.overlap(bomb, enemies, function(bomb, enemy){
 	 			bomb.explode(enemy);
@@ -142,6 +142,18 @@ function updateScene()
 	bombs.forEach(updateBomb, this, true);
 	game.physics.arcade.collide(collectible, platforms);
 	game.physics.arcade.overlap(player, collectible, collectItem, null, this);
+	collectible.forEach(updateCheese, this, true);
+
+	//start timer
+	if(collectible.length < 10)
+		timer -= game.time.elapsed;
+
+	//spwan items
+	if(timer <= 0)
+	{
+		timer = 5000;
+		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(0, game.height), 'star')
+	}
 }
 
 function updateBomb(bomb)
@@ -163,6 +175,16 @@ function updateBomb(bomb)
 		bomb.body.velocity.y = -400;
 
 	game.physics.arcade.overlap(bombs, enemies, bomb.detectEnemy, bomb.detectEnemy, this);
+
+}
+
+function updateCheese(cheese)
+{
+	var cheeseHitRope = game.physics.arcade.collide(cheese, ropes);
+
+	//bounce bomb when hits the trampline
+	if(cheeseHitRope && cheese.body.touching.down)
+		cheese.body.velocity.y = -400;
 
 }
 
