@@ -7,6 +7,7 @@
 	<script type="text/javascript" src="Scripts/Player.js"></script>
 	<script type="text/javascript" src="Scripts/Enemies.js"></script>
 	<script type="text/javascript" src="Scripts/Scene.js"></script>
+	<script type="text/javascript" src="Scripts/Score.js"></script>
     <style type="text/css">
         body {
             margin: 0;
@@ -81,6 +82,8 @@ function create(){
 	createPlayer();
 
 	createEnemies();
+
+	createScore();
 }
 
 
@@ -90,6 +93,7 @@ function update(){
 	updatePlayer();
 	updateEnemies();
 	updateScene();
+	updateScore();
 	game.physics.arcade.collide(collectible, platforms);
 	game.physics.arcade.overlap(player, collectible);
 
