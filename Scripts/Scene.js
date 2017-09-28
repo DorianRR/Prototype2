@@ -59,13 +59,13 @@ function createScene()
 	bombs.enableBody = true;
 
 	for(var i = 0; i < 5; i++)
-		createBomb(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(0, game.height), 'bomb');
+		createBomb(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, game.height), 'bomb');
 
 	collectible = game.add.group();
 	collectible.enableBody = true;
 
 	for (var i = 0; i < 10; i++){
-		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(0, game.height), 'star')
+		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, game.height), 'star')
 	}
 
 }
@@ -129,8 +129,10 @@ function createCheese(x, y, sprite)
 	cheese.body.gravity.y = 300;
 	//set anchor to center
 	cheese.anchor.setTo(0.5, 0.5);
-	cheese.body.angularVelocity = 300;
-	cheese.body.velocity.x = 50;
+	//cheese.body.angularVelocity = 300;
+	//cheese.body.velocity.x = 50;
+	cheese.body.collideWorldBounds = true;
+	cheese.direction = game.rnd.integerInRange(0, 1) * 2 - 1;
 	// cheese.body.angularDrag = 50;
 	// cheese.body.angularAcceleration = 200;
 }
@@ -151,7 +153,7 @@ function updateScene()
 	if(timer <= 0)
 	{
 		timer = 5000;
-		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(0, game.height), 'star')
+		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, map.height), 'star')
 	}
 }
 
@@ -180,6 +182,18 @@ function updateCheese(cheese)
 	//bounce bomb when hits the trampline
 	if(cheeseHitRope && cheese.body.touching.down)
 		cheese.body.velocity.y = -400;
+
+	if(cheese.world.x >= game.world.width - 15)
+	{
+		cheese.direction = -1;
+	}
+	else if( cheese.world.x <= 15)
+	{
+		cheese.direction = 1;
+	}
+
+	cheese.body.velocity.x = cheese.direction * 50;
+	cheese.body.angularVelocity = cheese.direction * 300;
 
 }
 
