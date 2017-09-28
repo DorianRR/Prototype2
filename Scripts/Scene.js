@@ -6,7 +6,6 @@ function createScene()
 	platforms.enableBody = true;
 
 	createPlatform(0, game.world.height -32, 'ground', .4, 1);
-	//createPlatform(0, game.world.height -32, 'ground', .4, .5);
 	createPlatform(0, game.world.height -140, 'ground', .4, .5);
 	createPlatform(0, game.world.height -245, 'ground', .4, .5);
 	createPlatform(0, game.world.height -354, 'ground', .4, .5);
@@ -59,14 +58,15 @@ function createScene()
 	bombs.enableBody = true;
 
 	for(var i = 0; i < 5; i++)
-		createBomb(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, map.height - 40), 'bomb');
+		createBomb(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, game.height), 'bomb');
 
 	collectible = game.add.group();
 	collectible.enableBody = true;
 
-	for (var i = 0; i < 5; i++){
-		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, map.height - 40), 'star', true);
-		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, map.height - 40), 'star', false);
+	for (var i = 0; i < 10; i++){
+		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, game.height), 'star')
+	
+	
 	}
 
 }
@@ -105,10 +105,7 @@ function createBomb(x, y, sprite)
 		bomb.explode = function(enemy){
 		console.log("Explode");
 		if(enemy)
-		{
-			sounds.meow.play();
 			enemy.isStunned = true;
-		}
 	 	//clear bomb
 	 	bomb.kill();
  	};
@@ -127,7 +124,7 @@ function createBomb(x, y, sprite)
 	return bomb;
 }
 
-function createCheese(x, y, sprite, isStationary)
+function createCheese(x, y, sprite)
 {
 	var cheese = collectible.create(x, y, sprite);
 	cheese.body.gravity.y = 300;
@@ -137,7 +134,6 @@ function createCheese(x, y, sprite, isStationary)
 	//cheese.body.velocity.x = 50;
 	cheese.body.collideWorldBounds = true;
 	cheese.direction = game.rnd.integerInRange(0, 1) * 2 - 1;
-	cheese.isStationary = isStationary;
 	// cheese.body.angularDrag = 50;
 	// cheese.body.angularAcceleration = 200;
 }
@@ -145,6 +141,7 @@ function createCheese(x, y, sprite, isStationary)
 //update scene
 function updateScene()
 {
+
 	bombs.forEach(updateBomb, this, true);
 	game.physics.arcade.collide(collectible, platforms);
 	game.physics.arcade.overlap(player, collectible, collectItem, null, this);
@@ -158,10 +155,14 @@ function updateScene()
 	if(timer <= 0)
 	{
 		timer = 5000;
-		createCheese(game.rnd.integerInRange(0, map.width - 30), game.rnd.integerInRange(226, map.height - 40), 
-			'star', game.rnd.integerInRange(0, 1))
+		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, map.height), 'star')
 	}
+	
 }
+
+
+
+
 
 function updateBomb(bomb)
 {
@@ -198,16 +199,9 @@ function updateCheese(cheese)
 		cheese.direction = 1;
 	}
 
-	if(!cheese.isStationary)
-	{
-		cheese.body.velocity.x = cheese.direction * 50;
-		cheese.body.angularVelocity = cheese.direction * 300;
-	}
-		
+	cheese.body.velocity.x = cheese.direction * 50;
+	cheese.body.angularVelocity = cheese.direction * 300;
+
 }
 
-function collectItem(player, cheese){
-	//cheese.kill();
-	collectible.removeChild(cheese);
-	sounds.collect.play();
-	}
+

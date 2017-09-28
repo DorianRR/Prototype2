@@ -71,7 +71,11 @@ var me = this;
         me.incrementScore();
         me.scoreBuffer --;
     }
+<<<<<<< HEAD
     
+=======
+	
+>>>>>>> parent of 68a587c... Revert "Merge branch 'AnimatedScore'"
 }
 
 
