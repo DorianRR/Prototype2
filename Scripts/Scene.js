@@ -6,7 +6,6 @@ function createScene()
 	platforms.enableBody = true;
 
 	createPlatform(0, game.world.height -32, 'ground', .4, 1);
-	//createPlatform(0, game.world.height -32, 'ground', .4, .5);
 	createPlatform(0, game.world.height -140, 'ground', .4, .5);
 	createPlatform(0, game.world.height -245, 'ground', .4, .5);
 	createPlatform(0, game.world.height -354, 'ground', .4, .5);
@@ -205,9 +204,4 @@ function updateCheese(cheese)
 
 }
 
-function collectItem(player, collectible){
-	collectible.kill();
-	createScoreAnimate();
-	//score += 10;
-    //scoreText.text = 'Score: ' + score;
-}
+

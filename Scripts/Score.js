@@ -1,7 +1,6 @@
 
 function createScore()
 {
-	console.log("Score working?");
     var me = this;
     var scoreFont = "50px Arial";
 
@@ -15,16 +14,9 @@ function createScore()
     me.scoreLabel.anchor.setTo(2.5, 0);
     //me.scoreLabel.align = 'center';
 
-   
-    var seed = Date.now();
-    me.random = new Phaser.RandomDataGenerator([seed]);
- 
-    me.game.input.onUp.add(function(pointer){
- 
-    var newScore = me.random.integerInRange(1, 30);
-    me.createScoreAnimation(pointer.x, pointer.y, '+'+newScore, newScore);
- 
-}, me);
+    //Create a tween to grow / shrink the score label
+    // me.scoreLabelTween = me.add.tween(me.scoreLabel.scale).to({ x: 1.5, y: 1.5}, 200, Phaser.Easing.Linear.In).to({ x: 1, y: 1}, 200, Phaser.Easing.Linear.In);
+
     
 }
 
@@ -32,9 +24,8 @@ function collectItem(player, collectible){
     var me = this;
 
     collectible.kill();
-    createScoreAnimate();
+    createScoreAnimate("+100!");
     me.scoreBuffer += 50;
-    //scoreText.text = 'Score: ' + score;
 }
 
 function incrementScore()
@@ -46,12 +37,12 @@ function incrementScore()
 
 }
 
-function createScoreAnimate()
+function createScoreAnimate(message)
 {
     var me = this;
  
     var scoreFont = "25px Arial";
-    var message = "+100!"
+    //var message = "+100!"
  
     //Create a new label for the score
     var scoreAnimation = me.game.add.text(player.world.x, player.world.y, message, {font: scoreFont, fill: "#39d179", stroke: "#ffffff", strokeThickness: 10}); 
@@ -64,7 +55,7 @@ function createScoreAnimate()
     //When the animation finishes, destroy this score label, trigger the total score labels animation and add the score
     scoreTween.onComplete.add(function(){
         scoreAnimation.destroy();
-        //me.scoreLabelTween.start();
+        // me.scoreLabelTween.start();
         //me.scoreBuffer += score;
     }, me);
 
