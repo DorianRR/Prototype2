@@ -11,22 +11,30 @@ function createEnemies()
 }
 
 var hitPlatform; 
+var spawnTime = 0;
 
 function updateEnemies()
 {
     //call hitEnemy() when hit
 	game.physics.arcade.overlap(player, enemies, hitEnemy, null, this);
-
 	game.physics.arcade.collide(enemies, platforms);
 	game.physics.arcade.collide(enemies, enemies);
 
 	enemies.forEach(move, this, true);
+
+	spawnTime -= game.time.elapsed;
+	if(spawnTime <= 0){
+		createEnemy(game.rnd.integerInRange(0, game.world.width), game.rnd.integerInRange(226, game.world.height - 40));
+		spawnTime = 7500;
+		console.log("Random Spawn!");
+	}
+
 }
 
 
 //create one enemy at (x, y)
 function createEnemy(x, y)
-{
+{	
 	var enemy = enemies.create(x, y, 'enemy');
 	enemy.animations.add('left', [0, 1, 2, 3, 4, 5], 10, true);
 	enemy.animations.add('right', [6, 7, 8, 9, 10, 11], 10, true);
@@ -47,7 +55,7 @@ function createEnemy(x, y)
 
 	enemy.isStunned = false;
 	enemy.stunnedTime = 5000;
-
+	enemy.spawnTime = 7500;
 
 	//set animations
 	
