@@ -17,7 +17,7 @@ function createPlayer()
 
     //set animations
 	player.animations.add('left', [0, 1, 2, 3, 4, 5], 10, true);
-    player.animations.add('right', [0, 1, 2, 3, 4, 5], 10, true);
+    player.animations.add('right', [6, 7, 8, 9, 10, 11], 10, true);
 
     player.health = 3;
 
