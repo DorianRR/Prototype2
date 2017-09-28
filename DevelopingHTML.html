@@ -54,8 +54,6 @@ var bombs;
 
 var collectible;
 
-var score = 0;
-var scoreText;
 var map;
 var sounds = {};
 
@@ -81,8 +79,6 @@ function create(){
 	createEnemies();
 
 	createScore();
-	scoreText = game.add.text(16, 16, 'Score : 0', {fontSize: '32px', fill: '#000'});
-	scoreText.fixedToCamera = true;
 
 	sounds.collect = game.add.audio('collect');
 	sounds.run = game.add.audio('run');

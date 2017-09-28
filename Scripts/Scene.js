@@ -210,7 +210,4 @@ function collectItem(player, cheese){
 	//cheese.kill();
 	collectible.removeChild(cheese);
 	sounds.collect.play();
-	
-	score += 10;
-    scoreText.text = 'Score: ' + score;
-}
+	}
