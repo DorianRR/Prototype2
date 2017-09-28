@@ -47,6 +47,7 @@ function createEnemy(x, y)
 
 	//set animations
 	enemy.animations.add('left', [0, 1, 2, 3, 4, 5], 10, true);
+	enemy.animations.add('right', [6, 7, 8, 9, 10, 11], 10, true);
 
 
 }
@@ -80,10 +81,10 @@ function move(enemy)
 
 	else if(enemy.world.x < 5){
 			enemy.direction = 1;
-			//enemy.animations.play('enemyRight');
+			enemy.animations.play('right');
 
 	}
-	else if(enemy.world.x > 1545){
+	else if(enemy.world.x > game.world.width-60){
 			enemy.direction = -1;
 			enemy.animations.play('left');
 	}
@@ -95,7 +96,7 @@ function move(enemy)
 		    enemy.direction = -1;
 		}
 		else{
-			//enemy.animations.play('enemyRight');
+			enemy.animations.play('right');
 		    enemy.direction = 1;    
 		}
 	}  	
