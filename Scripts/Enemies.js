@@ -96,7 +96,6 @@ function move(enemy)
     if(enemy.isStunned)
     {
     	enemy.body.velocity.x = 0;
-    	enemy.body.velocity.y = 0;
     	enemy.stunnedTime -= game.time.elapsed;
     }
 
