@@ -44,6 +44,7 @@ function createEnemy(x, y)
 	enemy.isStunned = false;
 	enemy.stunnedTime = 5000;
 
+
 	//set animations
 	enemy.animations.add('left', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 20, true);
 
@@ -69,9 +70,12 @@ function move(enemy)
     //  Allow the enemy to jump if they are touching the rope.
     if (hitRope && enemy.body.touching.down)
     {
-    	enemy.body.velocity.y = -(Math.abs(enemy.world.y - player.world.y))*2
-
+    	enemy.body.velocity.y = -(Math.abs(enemy.world.y - player.world.y))*1.85
+    	//enemy.isStunned = true;
+    	//enemy.isStunned = 500;
     }
+
+ 	
 
 	else if(enemy.world.x < 5){
 			enemy.direction = 1;
