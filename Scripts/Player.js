@@ -37,9 +37,7 @@ function updatePlayer()
 {
 
 
-    //console.log(player.world.y);
 	//  Collide the player with the platforms
-    
     game.physics.arcade.collide(player, platforms);
     game.physics.arcade.collide(player, doors, openDoor, openDoor, this);
     game.physics.arcade.collide(waves, enemies);

@@ -18,6 +18,8 @@ function updateEnemies()
 	game.physics.arcade.overlap(player, enemies, hitEnemy, null, this);
 
 	game.physics.arcade.collide(enemies, platforms);
+	game.physics.arcade.collide(enemies, enemies);
+
 
 	enemies.forEach(move, this, true);
 
