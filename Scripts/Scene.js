@@ -66,6 +66,8 @@ function createScene()
 
 	for (var i = 0; i < 10; i++){
 		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, game.height), 'star')
+	
+	
 	}
 
 }
@@ -140,6 +142,7 @@ function createCheese(x, y, sprite)
 //update scene
 function updateScene()
 {
+
 	bombs.forEach(updateBomb, this, true);
 	game.physics.arcade.collide(collectible, platforms);
 	game.physics.arcade.overlap(player, collectible, collectItem, null, this);
@@ -155,7 +158,12 @@ function updateScene()
 		timer = 5000;
 		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, map.height), 'star')
 	}
+	
 }
+
+
+
+
 
 function updateBomb(bomb)
 {
@@ -199,7 +207,7 @@ function updateCheese(cheese)
 
 function collectItem(player, collectible){
 	collectible.kill();
-	
-	score += 10;
-    scoreText.text = 'Score: ' + score;
+	createScoreAnimate();
+	//score += 10;
+    //scoreText.text = 'Score: ' + score;
 }
