@@ -100,7 +100,6 @@ function createBomb(x, y, sprite)
 {
 	var bomb = bombs.create(x, y, sprite);
 	bomb.body.gravity.y = 300;
-	bomb.time = 5000;
 	bomb.onFire = false;
 		bomb.explode = function(enemy){
 		console.log("Explode");
@@ -158,10 +157,6 @@ function updateScene()
 
 function updateBomb(bomb)
 {
-	 if(bomb.onFire == true)
-	 	bomb.time -= game.time.elapsed;
-	 if(bomb.time <= 0)
-	 	bomb.explode(null);
 
 	var bombHitPlat = game.physics.arcade.collide(bomb, platforms);
 	var bombHitRope = game.physics.arcade.collide(bomb, ropes);
