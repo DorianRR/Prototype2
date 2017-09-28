@@ -67,13 +67,7 @@ function updatePlayer()
             runTimer ++;
             player.body.velocity.x *= 2;
         }
-        
-
     }
-    // if (runTimer >= 100){
-    //         runTimer = 0;
-    //         // isDashing = false;
-    //     }
 
     else if (cursors.right.isDown)
     {
@@ -87,14 +81,17 @@ function updatePlayer()
             runTimer ++;
             player.body.velocity.x *= 2;
         }
+
     }
     
+    if(!cursors.space.isDown){
+        player.isDashing = false;
+    }
 
     else
     {
         //  Stand still
         player.animations.stop();
-
         player.frame = 4;
     }
     
@@ -105,11 +102,11 @@ function updatePlayer()
         player.body.velocity.y = -500;
     }
     
+
    // game.physics.arcade.overlap(player, doors, openDoor, null, this);   
     
     if(player.health <= 0 )
         player.kill();
-    // console.log(isDashing);
 }
 
 //Open a door
