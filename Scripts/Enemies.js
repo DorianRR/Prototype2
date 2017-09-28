@@ -46,7 +46,7 @@ function createEnemy(x, y)
 
 
 	//set animations
-	enemy.animations.add('left', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 20, true);
+	enemy.animations.add('left', [0, 1, 2, 3, 4, 5], 10, true);
 
 
 }
@@ -59,6 +59,7 @@ function hitEnemy(player, enemy)
 	{
 		player.health--;
 		enemy.isStunned = true;
+		sounds.meow.play();
 		console.log(player.health);
 	}
 }

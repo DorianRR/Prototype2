@@ -105,7 +105,10 @@ function createBomb(x, y, sprite)
 		bomb.explode = function(enemy){
 		console.log("Explode");
 		if(enemy)
+		{
+			sounds.meow.play();
 			enemy.isStunned = true;
+		}
 	 	//clear bomb
 	 	bomb.kill();
  	};
@@ -154,7 +157,7 @@ function updateScene()
 	//spwan items
 	if(timer <= 0)
 	{
-		timer = 3000;
+		timer = 5000;
 		createCheese(game.rnd.integerInRange(0, map.width - 30), game.rnd.integerInRange(226, map.height - 40), 
 			'star', game.rnd.integerInRange(0, 1))
 	}
@@ -206,6 +209,7 @@ function updateCheese(cheese)
 function collectItem(player, cheese){
 	//cheese.kill();
 	collectible.removeChild(cheese);
+	sounds.collect.play();
 	
 	score += 10;
     scoreText.text = 'Score: ' + score;
