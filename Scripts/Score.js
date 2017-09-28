@@ -11,11 +11,10 @@ function createScore()
     //Create the score label
     me.scoreLabel = me.game.add.text(400, 0, "0", {font: scoreFont, fill: "#ffffff", stroke: "#535353", strokeThickness: 10}); 
     me.scoreLabel.fixedToCamera = true;
-    //me.scoreLabel.anchor.setTo(2.5, 0);
     //me.scoreLabel.align = 'center';
 
     //Create a tween to grow / shrink the score label
-    // me.scoreLabelTween = me.add.tween(me.scoreLabel.scale).to({ x: 1.5, y: 1.5}, 200, Phaser.Easing.Linear.In).to({ x: 1, y: 1}, 200, Phaser.Easing.Linear.In);
+    me.scoreLabelTween = me.game.dd.tween(me.scoreLabel.scale).to({ x: 1.5, y: 1.5}, 200, Phaser.Easing.Linear.In).to({ x: 1, y: 1}, 200, Phaser.Easing.Linear.In);
 
     
 }
@@ -52,9 +51,13 @@ function createScoreAnimate(message)
     // //Tween this score label to the total score label
     var scoreTween = me.game.add.tween(scoreAnimation).to({x:player.world.x +300, y: player.world.y - 350}, 800, Phaser.Easing.Exponential.In, true);
  
+    // me.scoreLabelTween = me.add.tween(me.scoreLabel.scale).to({ x: 1.5, y: 1.5}, 200, Phaser.Easing.Linear.In).to({ x: 1, y: 1}, 200, Phaser.Easing.Linear.In);
+
+
     //When the animation finishes, destroy this score label, trigger the total score labels animation and add the score
     scoreTween.onComplete.add(function(){
         scoreAnimation.destroy();
+
         // me.scoreLabelTween.start();
         //me.scoreBuffer += score;
     }, me);
