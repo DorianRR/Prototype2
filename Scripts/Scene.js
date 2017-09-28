@@ -59,13 +59,14 @@ function createScene()
 	bombs.enableBody = true;
 
 	for(var i = 0; i < 5; i++)
-		createBomb(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, game.height), 'bomb');
+		createBomb(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, map.height - 40), 'bomb');
 
 	collectible = game.add.group();
 	collectible.enableBody = true;
 
-	for (var i = 0; i < 10; i++){
-		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, game.height), 'star')
+	for (var i = 0; i < 5; i++){
+		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, map.height - 40), 'star', true);
+		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, map.height - 40), 'star', false);
 	}
 
 }
@@ -123,7 +124,7 @@ function createBomb(x, y, sprite)
 	return bomb;
 }
 
-function createCheese(x, y, sprite)
+function createCheese(x, y, sprite, isStationary)
 {
 	var cheese = collectible.create(x, y, sprite);
 	cheese.body.gravity.y = 300;
@@ -133,6 +134,7 @@ function createCheese(x, y, sprite)
 	//cheese.body.velocity.x = 50;
 	cheese.body.collideWorldBounds = true;
 	cheese.direction = game.rnd.integerInRange(0, 1) * 2 - 1;
+	cheese.isStationary = isStationary;
 	// cheese.body.angularDrag = 50;
 	// cheese.body.angularAcceleration = 200;
 }
@@ -152,8 +154,9 @@ function updateScene()
 	//spwan items
 	if(timer <= 0)
 	{
-		timer = 5000;
-		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, map.height), 'star')
+		timer = 3000;
+		createCheese(game.rnd.integerInRange(0, map.width - 30), game.rnd.integerInRange(226, map.height - 40), 
+			'star', game.rnd.integerInRange(0, 1))
 	}
 }
 
@@ -192,13 +195,17 @@ function updateCheese(cheese)
 		cheese.direction = 1;
 	}
 
-	cheese.body.velocity.x = cheese.direction * 50;
-	cheese.body.angularVelocity = cheese.direction * 300;
-
+	if(!cheese.isStationary)
+	{
+		cheese.body.velocity.x = cheese.direction * 50;
+		cheese.body.angularVelocity = cheese.direction * 300;
+	}
+		
 }
 
-function collectItem(player, collectible){
-	collectible.kill();
+function collectItem(player, cheese){
+	//cheese.kill();
+	collectible.removeChild(cheese);
 	
 	score += 10;
     scoreText.text = 'Score: ' + score;
