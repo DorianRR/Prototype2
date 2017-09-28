@@ -7,7 +7,7 @@ function createEnemies()
 
 	//create enemy randomly
 	for(var i = 0; i < 5; i++)
-		createEnemy(game.rnd.integerInRange(0, game.world.width), game.rnd.integerInRange(226, game.world.height));
+		createEnemy(game.rnd.integerInRange(0, game.world.width), game.rnd.integerInRange(226, game.world.height - 40));
 }
 
 var hitPlatform; 
@@ -46,7 +46,7 @@ function createEnemy(x, y)
 
 
 	//set animations
-	enemy.animations.add('left', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 20, true);
+	enemy.animations.add('left', [0, 1, 2, 3, 4, 5], 10, true);
 
 
 }
@@ -58,7 +58,8 @@ function hitEnemy(player, enemy)
 	if(player.body.touching.down && !player.isDashing && !enemy.isStunned)
 	{
 		player.health--;
-		enemy.kill();
+		enemy.isStunned = true;
+		sounds.meow.play();
 		console.log(player.health);
 	}
 }
