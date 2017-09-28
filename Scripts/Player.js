@@ -16,13 +16,8 @@ function createPlayer()
 	player.body.collideWorldBounds = true;
 
     //set animations
-<<<<<<< HEAD
 	player.animations.add('left', [0, 1, 2, 3, 4, 5], 10, true);
     player.animations.add('right', [6, 7, 8, 9, 10, 11], 10, true);
-=======
-	player.animations.add('left', [0, 1, 2, 3], 10, true);
-    player.animations.add('right', [5, 6, 7, 8], 10, true);
->>>>>>> AnimatedScore
 
     player.health = 3;
 
@@ -65,6 +60,7 @@ function updatePlayer()
         //  Move to the left
         player.body.velocity.x = -150;
         player.animations.play('left');
+        //sounds.run.play();
 
             //Dash code
         if(cursors.space.isDown && runTimer <= 100){
@@ -79,6 +75,7 @@ function updatePlayer()
         //  Move to the right
         player.body.velocity.x = 150;
         player.animations.play('right');
+        //sounds.run.play();
 
         //Dash code
         if(cursors.space.isDown && runTimer <= 100){
@@ -105,13 +102,17 @@ function updatePlayer()
     if (hitRope && player.body.touching.down)
     {
         player.body.velocity.y = -500;
+        sounds.jump.play();
     }
     
 
    // game.physics.arcade.overlap(player, doors, openDoor, null, this);   
     
     if(player.health <= 0 )
+    {
         player.kill();
+        sounds.gameover.play();
+    }
 }
 
 //Open a door
