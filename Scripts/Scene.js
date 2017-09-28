@@ -5,44 +5,40 @@ function createScene()
 	platforms = game.add.group();
 	platforms.enableBody = true;
 
-	createPlatform(0, game.world.height -32, 'ground', .4, 1);
-	//createPlatform(0, game.world.height -32, 'ground', .4, .5);
-	createPlatform(0, game.world.height -140, 'ground', .4, .5);
-	createPlatform(0, game.world.height -245, 'ground', .4, .5);
-	createPlatform(0, game.world.height -354, 'ground', .4, .5);
-	createPlatform(0, game.world.height -464, 'ground', .38, .5);
+	createPlatform(155, 338, 'ground', 1, 1.45);
+	createPlatform(155, 446, 'ground', 1, 1.45);
+	createPlatform(155, 555, 'ground', 1, 1.45);
+	createPlatform(155, 660, 'ground', 1, 1.45);
 
 
-	createPlatform(359, game.world.height -140, 'ground', .8, .5);
-	createPlatform(359, game.world.height -245, 'ground', .8, .5);
-	createPlatform(359, game.world.height -355, 'ground', .8, .5);
-	createPlatform(359, game.world.height -464, 'ground', .8, .5);
+	createPlatform(505, 338, 'ground', 1, 1.45);
+	createPlatform(505, 446, 'ground', 1, 1.45);
+	createPlatform(505, 555, 'ground', 1, 1.45);
+	createPlatform(505, 660, 'ground', 1, 1.45);
 
-	createPlatform(935, game.world.height -140, 'ground', .65, .5);
-	createPlatform(935, game.world.height -245, 'ground', .65, .5);
-	createPlatform(935, game.world.height -355, 'ground', .65, .5);
-	createPlatform(935, game.world.height -464, 'ground', .65, .5);
+	createPlatform(950, 338, 'ground', 0.9, 1.45);
+	createPlatform(950, 446, 'ground', 0.9, 1.45);
+	createPlatform(950, 555, 'ground', 0.9, 1.45);
+	createPlatform(950, 660, 'ground', 0.9, 1.45);
 
-	createPlatform(1364, game.world.height -140, 'ground', .65, .5);
-	createPlatform(1364, game.world.height -245, 'ground', .65, .5);
-	createPlatform(1364, game.world.height -355, 'ground', .65, .5);
-	createPlatform(1364, game.world.height -464, 'ground', .65, .5);
+	createPlatform(1295, 338, 'ground', 0.75, 1.45);
+	createPlatform(1295, 446, 'ground', 0.75, 1.45);
+	createPlatform(1295, 555, 'ground', 0.75, 1.45);
+	createPlatform(1295, 660, 'ground', 0.75, 1.45);
 
-	createPlatform(360, game.world.height -32, 'ground', 1, 1);
-	createPlatform(935, game.world.height -32, 'ground', .65, 1);
-	createPlatform(1366, game.world.height -32, 'ground', .65, 1);
-	createPlatform(0, 226, 'ground', 100, .5);
+	createPlatform(140, 768, 'ground', 6.6, 1);
+	createPlatform(0, 225, 'ground', 10, 1);
 
 
 	//Add group of ropes
 	ropes = game.add.group();
 	ropes.enableBody = true;
 
-	createRope(161, game.world.height -10, 'rope', 1);
-	createRope(161, game.world.height -245, 'rope', .98);
-	createRope(680, game.world.height -140, 'rope', 1.27);
-
-	createRope(1196, game.world.height -10, 'rope', .85);
+	createRope(0, 768, 'rope', 0.7);
+	createRope(373, 446, 'rope', 0.55);
+	createRope(720, 660, 'rope', 1);
+	createRope(1140, 555, 'rope', 0.7);
+	createRope(1460, 768, 'rope', 1);
 
 	//Add group of doors
 	//doors = game.add.group();
