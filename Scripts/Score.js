@@ -9,8 +9,12 @@ function createScore()
     me.scoreBuffer = 0;
 
     //Create the score label
-    me.scoreLabel = me.game.add.text(400, 0, "0", {font: scoreFont, fill: "#ffffff", stroke: "#535353", strokeThickness: 10}); 
+    me.scoreLabel = me.game.add.text(me.game.world.centerX, 0, "0", {font: scoreFont, fill: "#ffffff", stroke: "#535353", strokeThickness: 10}); 
     me.scoreLabel.fixedToCamera = true;
+<<<<<<< HEAD
+=======
+    me.scoreLabel.anchor.setTo(2.5, 0);
+>>>>>>> parent of 4f6316e... fixed merging problems
     //me.scoreLabel.align = 'center';
 
     //Create a tween to grow / shrink the score label

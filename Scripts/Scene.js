@@ -63,10 +63,16 @@ function createScene()
 	collectible = game.add.group();
 	collectible.enableBody = true;
 
-
+<<<<<<< HEAD
+	for (var i = 0; i < 10; i++){
+		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, game.height), 'star')
+	
+	
+=======
 	for (var i = 0; i < 5; i++){
 		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, map.height - 40), 'star', true);
 		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, map.height - 40), 'star', false);
+>>>>>>> master
 	}
 
 }
@@ -212,10 +218,12 @@ function updateCheese(cheese)
 		
 }
 
+<<<<<<< HEAD
 
-
+=======
 function collectItem(player, cheese){
 	//cheese.kill();
 	collectible.removeChild(cheese);
 	sounds.collect.play();
 	}
+>>>>>>> master
