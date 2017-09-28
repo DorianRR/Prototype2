@@ -45,7 +45,7 @@ function createScene()
 	createRope(1196, game.world.height -10, 'rope', .85);
 
 	//Add group of doors
-	doors = game.add.group();
+	//doors = game.add.group();
 	//doors.enableBody = true;
 
 	// createDoor(200, 100, 'doorClose');

@@ -7,7 +7,7 @@ function createEnemies()
 
 	//create enemy randomly
 	for(var i = 0; i < 5; i++)
-		createEnemy(game.rnd.integerInRange(0, game.world.width), game.rnd.integerInRange(0, game.world.height));
+		createEnemy(game.rnd.integerInRange(100, game.world.width-100), game.rnd.integerInRange(100, game.world.height));
 }
 
 var hitPlatform; 
@@ -65,17 +65,28 @@ function move(enemy)
 {
 	var hitRope = game.physics.arcade.collide(enemy, ropes);
 
-    //  Allow the player to jump if they are touching the rope.
+
+
+
+
+
+    //  Allow the enemy to jump if they are touching the rope.
     if (hitRope && enemy.body.touching.down)
     {
         enemy.body.velocity.y = -550;
     }
+
+
+
+
+
+
 	else if(enemy.world.x < 5){
 			enemy.direction = 1;
 	}
-	else if(enemy.world.x > 1165){
-			enemy.animations.play('right');
-			enemy.direction = 1;
+	else if(enemy.world.x > 1545){
+			//enemy.animations.play('right');
+			enemy.direction = -1;
 	}
 
    else if(player.body.touching.down && Math.abs(player.world.y - enemy.world.y) < 50)
