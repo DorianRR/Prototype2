@@ -26,7 +26,7 @@ function preload(){
 
 	game.load.image('ground', 'assets/platform.png')
 	game.load.spritesheet('enemyRight', 'assets/CatAnimationRight.png', 49, 39);
-	game.load.spritesheet('enemy', 'assets/CatAnimationLeft.png', 49, 39); 
+	game.load.spritesheet('enemy', 'assets/cat walking 55x45', 55, 45); 
 	game.load.image('map', "assets/Map.png");
 	game.load.spritesheet('dude','assets/mouse walking 40x45', 40, 45);
 	game.load.image('star','assets/star.png');
@@ -35,6 +35,12 @@ function preload(){
 	game.load.image('doorClose', 'assets/door_close.png');
 	game.load.image('wave', 'assets/firstaid.png');
 	game.load.image('bomb', 'assets/diamond.png');
+
+	game.load.audio('collect', 'assets/sound/75235__creek23__cha-ching.wav');
+	game.load.audio('run', 'assets/sound/107624__stintx__running-02.wav');
+	game.load.audio('meow', 'assets/sound/110011__tuberatanka__cat-meow.wav');
+	game.load.audio('jump', 'assets/sound/140867__juskiddink__boing.wav');
+	//game.load.audio('gameover', 'gameover.wav');
 
 }
 
@@ -51,6 +57,7 @@ var collectible;
 var score = 0;
 var scoreText;
 var map;
+var sounds = {};
 
 var timer = 5000;
 
@@ -76,6 +83,12 @@ function create(){
 	createScore();
 	scoreText = game.add.text(16, 16, 'Score : 0', {fontSize: '32px', fill: '#000'});
 	scoreText.fixedToCamera = true;
+
+	sounds.collect = game.add.audio('collect');
+	sounds.run = game.add.audio('run');
+	sounds.meow = game.add.audio('meow');
+	sounds.jump = game.add.audio('jump');
+	sounds.gameover = game.add.audio('gameover');
 
 }
 
