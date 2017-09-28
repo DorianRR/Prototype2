@@ -70,7 +70,7 @@ function move(enemy)
     //  Allow the enemy to jump if they are touching the rope.
     if (hitRope && enemy.body.touching.down)
     {
-    	enemy.body.velocity.y = -(Math.abs(enemy.world.y - player.world.y))*1.85
+    	enemy.body.velocity.y = -(Math.abs(enemy.world.y - player.world.y))*1.9
     	//enemy.isStunned = true;
     	//enemy.isStunned = 500;
     }
