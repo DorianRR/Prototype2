@@ -1,5 +1,6 @@
 var dropTime = 500;
 
+
 function createPlayer()
 {
 
@@ -36,6 +37,7 @@ function updatePlayer()
 {
 
 
+    //console.log(player.world.y);
 	//  Collide the player with the platforms
     
     game.physics.arcade.collide(player, platforms);

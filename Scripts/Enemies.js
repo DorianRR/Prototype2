@@ -45,7 +45,8 @@ function createEnemy(x, y)
 	enemy.stunnedTime = 5000;
 
 	//set animations
-	enemy.animations.add('right', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 20, true);
+	enemy.animations.add('left', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 20, true);
+
 
 }
 
@@ -65,38 +66,31 @@ function move(enemy)
 {
 	var hitRope = game.physics.arcade.collide(enemy, ropes);
 
-
-
-
-
-
     //  Allow the enemy to jump if they are touching the rope.
     if (hitRope && enemy.body.touching.down)
     {
-        enemy.body.velocity.y = -550;
+    	enemy.body.velocity.y = -(Math.abs(enemy.world.y - player.world.y))*2
+
     }
-
-
-
-
-
 
 	else if(enemy.world.x < 5){
 			enemy.direction = 1;
+			//enemy.animations.play('enemyRight');
+
 	}
 	else if(enemy.world.x > 1545){
-			//enemy.animations.play('right');
 			enemy.direction = -1;
+			enemy.animations.play('left');
 	}
 
    else if(player.body.touching.down && Math.abs(player.world.y - enemy.world.y) < 50)
 	{
 		if(enemy.x > player.x){
-			enemy.animations.play('right');
+			enemy.animations.play('left');
 		    enemy.direction = -1;
 		}
 		else{
-			enemy.animations.play('right');
+			//enemy.animations.play('enemyRight');
 		    enemy.direction = 1;    
 		}
 	}  	
