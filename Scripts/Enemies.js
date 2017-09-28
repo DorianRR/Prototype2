@@ -7,7 +7,7 @@ function createEnemies()
 
 	//create enemy randomly
 	for(var i = 0; i < 5; i++)
-		createEnemy(game.rnd.integerInRange(0, game.world.width), game.rnd.integerInRange(226, game.world.height));
+		createEnemy(game.rnd.integerInRange(0, game.world.width), game.rnd.integerInRange(226, game.world.height - 40));
 }
 
 var hitPlatform; 
@@ -58,7 +58,7 @@ function hitEnemy(player, enemy)
 	if(player.body.touching.down && !player.isDashing && !enemy.isStunned)
 	{
 		player.health--;
-		enemy.kill();
+		enemy.isStunned = true;
 		console.log(player.health);
 	}
 }
