@@ -3,16 +3,17 @@ function createScore()
 {
 	console.log("Score working?");
     var me = this;
-    var scoreFont = "100px Arial";
+    var scoreFont = "50px Arial";
 
 
     me.score = 0;
     me.scoreBuffer = 0;
 
     //Create the score label
-    me.scoreLabel = me.game.add.text(me.game.world.centerX, 0, "0", {font: scoreFont, fill: "#ffffff", stroke: "#535353", strokeThickness: 15}); 
-    me.scoreLabel.anchor.setTo(0.5, 0);
-    me.scoreLabel.align = 'center';
+    me.scoreLabel = me.game.add.text(me.game.world.centerX, 0, "0", {font: scoreFont, fill: "#ffffff", stroke: "#535353", strokeThickness: 10}); 
+    me.scoreLabel.fixedToCamera = true;
+    me.scoreLabel.anchor.setTo(2.5, 0);
+    //me.scoreLabel.align = 'center';
 
    
     var seed = Date.now();
@@ -49,16 +50,16 @@ function createScoreAnimate()
 {
     var me = this;
  
-    var scoreFont = "35px Arial";
+    var scoreFont = "25px Arial";
     var message = "+100!"
  
     //Create a new label for the score
-    var scoreAnimation = me.game.add.text(player.world.x, player.world.y, message, {font: scoreFont, fill: "#39d179", stroke: "#ffffff", strokeThickness: 15}); 
-    scoreAnimation.anchor.setTo(0.5, 0);
-    scoreAnimation.align = 'center';
+    var scoreAnimation = me.game.add.text(player.world.x, player.world.y, message, {font: scoreFont, fill: "#39d179", stroke: "#ffffff", strokeThickness: 10}); 
+    scoreAnimation.anchor.setTo(0, 0);
+    //scoreAnimation.align = 'center';
  
     // //Tween this score label to the total score label
-    var scoreTween = me.game.add.tween(scoreAnimation).to({x:me.game.world.centerX, y: 50}, 800, Phaser.Easing.Exponential.In, true);
+    var scoreTween = me.game.add.tween(scoreAnimation).to({x:player.world.x +300, y: player.world.y - 350}, 800, Phaser.Easing.Exponential.In, true);
  
     //When the animation finishes, destroy this score label, trigger the total score labels animation and add the score
     scoreTween.onComplete.add(function(){
