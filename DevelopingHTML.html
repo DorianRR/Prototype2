@@ -25,23 +25,22 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, '', {preload: preload, create:
 function preload(){
 
 	game.load.image('ground', 'assets/platform.png')
-<<<<<<< HEAD
 	//game.load.spritesheet('enemyRight', 'assets/CatAnimationRight.png', 49, 39);
 	game.load.spritesheet('enemy', 'assets/cat walking 55x45', 55, 45); 
 	game.load.image('map', "assets/Master Map_update_9_28.png");
 	game.load.spritesheet('dude','assets/mouse walking 45x51', 45, 51);
-=======
-	game.load.spritesheet('enemyRight', 'assets/CatAnimationRight.png', 49, 39);
-	game.load.spritesheet('enemy', 'assets/CatAnimationLeft.png', 49, 39); 
-	game.load.image('map', "assets/Map.png");
-	game.load.spritesheet('dude','assets/dude.png', 32, 48)
->>>>>>> AnimatedScore
 	game.load.image('star','assets/star.png');
 	game.load.image('rope','assets/rope.png');
 	game.load.image('doorOpen', 'assets/door_open.png');
 	game.load.image('doorClose', 'assets/door_close.png');
 	game.load.image('wave', 'assets/firstaid.png');
 	game.load.image('bomb', 'assets/Bomb.png');
+
+	game.load.audio('collect', 'assets/sound/75235__creek23__cha-ching.wav');
+	game.load.audio('run', 'assets/sound/107624__stintx__running-02.wav');
+	game.load.audio('meow', 'assets/sound/110011__tuberatanka__cat-meow.wav');
+	game.load.audio('jump', 'assets/sound/140867__juskiddink__boing.wav');
+	//game.load.audio('gameover', 'gameover.wav');
 
 }
 
@@ -56,6 +55,7 @@ var bombs;
 var collectible;
 
 var map;
+var sounds = {};
 
 var timer = 5000;
 
@@ -79,7 +79,12 @@ function create(){
 	createEnemies();
 
 	createScore();
-	
+
+	sounds.collect = game.add.audio('collect');
+	sounds.run = game.add.audio('run');
+	sounds.meow = game.add.audio('meow');
+	sounds.jump = game.add.audio('jump');
+	sounds.gameover = game.add.audio('gameover');
 
 }
 
