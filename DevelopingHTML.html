@@ -36,6 +36,7 @@ function preload(){
 	game.load.image('doorClose', 'assets/door_close.png');
 	game.load.image('wave', 'assets/firstaid.png');
 	game.load.image('bomb', 'assets/Bomb.png');
+	game.load.spritesheet('explosion', 'assets/explode.png', 64, 64);
 
 	game.load.audio('collect', 'assets/sound/75235__creek23__cha-ching.wav');
 	game.load.audio('run', 'assets/sound/107624__stintx__running-02.wav');
@@ -50,7 +51,8 @@ var platforms;
 var cursors;
 var enemies;
 var ropes;
-var doors;
+var openDoors;
+var closedDoors;
 var bombs;
 
 var collectible;

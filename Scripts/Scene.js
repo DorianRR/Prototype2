@@ -41,15 +41,18 @@ function createScene()
 	createRope(1460, 768, 'rope', 1);
 
 	//Add group of doors
-	//doors = game.add.group();
-	//doors.enableBody = true;
+	closedDoors = game.add.group();
 
-	// createDoor(200, 100, 'doorClose');
-	// createDoor(800, 100, 'doorClose');
-	// createDoor(200, 300, 'doorClose');
-	// createDoor(800, 300, 'doorClose');
-	// createDoor(200, 468, 'doorClose');
-	// createDoor(800, 468, 'doorClose');
+	createDoor(200, 240, 'doorClose');
+	createDoor(300, 460, 'doorClose');
+	createDoor(1350, 240, 'doorClose');
+	createDoor(1000, 350, 'doorClose');
+	createDoor(600, 565, 'doorClose');
+	createDoor(1000, 565, 'doorClose');
+	createDoor(150, 675, 'doorClose');
+	createDoor(300, 675, 'doorClose');
+
+	openDoors = game.add.group();
 
 	bombs = game.add.group();
 	bombs.enableBody = true;
@@ -84,12 +87,20 @@ function createRope(x, y, sprite, scaleX)
 }
 
 //Add one door
-function createDoor(x, y, sprit)
+function createDoor(x, y, sprite, isOpen = false)
 {
-	var door = doors.create(x, y, sprit);
+	var door;
+	if(isOpen)
+	{
+		door = openDoors.create(x, y, sprite);
+	}
+	else
+	{
+		door = closedDoors.create(x, y, sprite);		
+	}
 	door.body = new Phaser.Physics.Arcade.Body(door);
-	door.body.enable = true;
 	door.body.immovable = true;
+	//boor.direction = 
 }
 
 //Add one bomb
@@ -99,14 +110,22 @@ function createBomb(x, y, sprite)
 	bomb.body.gravity.y = 300;
 	bomb.onFire = false;
 		bomb.explode = function(enemy){
-		console.log("Explode");
-		if(enemy)
-		{
-			sounds.meow.play();
-			enemy.isStunned = true;
-		}
-	 	//clear bomb
-	 	bomb.kill();
+			//playe animation of explosion
+			var explosionAnim = game.add.sprite(bomb.world.x, bomb.world.y, 'explosion');
+			console.log(explosionAnim);
+			var anim = explosionAnim.animations.add('explode', [0, 0, 0, 0, 0, 0], 10, false);
+			explosionAnim.animations.play('explode');
+			anim.onComplete.add(function(sprite, anim){
+				sprite.kill();
+			}, this);
+			console.log("Explode");
+			if(enemy)
+			{
+				sounds.meow.play();
+				enemy.isStunned = true;
+			}
+		 	//clear bomb
+		 	bomb.kill();
  	};
 
 	bomb.detectEnemy = function(){
@@ -144,6 +163,7 @@ function updateScene()
 	bombs.forEach(updateBomb, this, true);
 	game.physics.arcade.collide(collectible, platforms);
 	game.physics.arcade.overlap(player, collectible, collectItem, null, this);
+	game.physics.arcade.collide(collectible, closedDoors, changeDirCheese, null, this);
 	collectible.forEach(updateCheese, this, true);
 
 	//start timer
@@ -153,14 +173,14 @@ function updateScene()
 	//spwan items
 	if(timer <= 0)
 	{
-		timer = 5000;
+		timer = 3000;
 		var isStationary = game.rnd.integerInRange(0, 1);
 		if(isStationary)
 			createCheese(game.rnd.integerInRange(0, map.width - 30), game.rnd.integerInRange(226, map.height - 40), 'cheese', true);
 		else
 			createCheese(game.rnd.integerInRange(0, map.width - 30), game.rnd.integerInRange(226, map.height - 40), 'rollingCheese', false);
-
 	}
+
 }
 
 function updateBomb(bomb)
@@ -204,6 +224,11 @@ function updateCheese(cheese)
 		cheese.body.angularVelocity = cheese.direction * 300;
 	}
 		
+}
+
+function changeDirCheese(cheese, door)
+{
+	cheese.direction = -cheese.direction;
 }
 
 function collectItem(player, cheese){
