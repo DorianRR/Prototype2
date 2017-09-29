@@ -1,5 +1,6 @@
 var dropTime = 500;
-
+var doorTime = 0;
+var isToggleDoor = false;
 
 function createPlayer()
 {
@@ -39,7 +40,8 @@ function updatePlayer()
 
 	//  Collide the player with the platforms
     game.physics.arcade.collide(player, platforms);
-    game.physics.arcade.collide(player, doors, openDoor, openDoor, this);
+    game.physics.arcade.collide(player, closedDoors, openDoor, openDoor, this);
+    game.physics.arcade.overlap(player, openDoors, closeDoor, closeDoor, this);
     game.physics.arcade.collide(waves, enemies);
     game.physics.arcade.overlap(player, bombs, pickBomb, pickBomb, this);
 
@@ -49,6 +51,15 @@ function updatePlayer()
 
     if(player.children != null)
         dropTime -= game.time.elapsed;
+
+    if(isToggleDoor)
+    {
+        doorTime -= game.time.elapsed;
+    }
+    if(doorTime <= 0)
+    {
+        isToggleDoor = false;
+    }
 
     //  Reset the players velocity
     player.body.velocity.x = 0;
@@ -116,15 +127,33 @@ function updatePlayer()
 //Open a door
 function openDoor(player, door)
 {
-    if(cursors.space.isDown){    
-        var openDoor = doors.create(door.x, door.y, "doorOpen");
+    if(cursors.down.isDown && doorTime <= 0){   
+        createDoor(door.x, door.y, "doorOpen", true); 
+
         door.destroy(true, true);
         console.log("open door");
+        doorTime = 500;
+        isToggleDoor = true;
+
         createWave(player.world.x,player.world.y, 'wave')
 
         return false;
     }    
     
+}
+
+function closeDoor(player, door)
+{
+    if(cursors.down.isDown && doorTime <= 0)
+    {
+        createDoor(door.x, door.y, "doorClose");
+        door.kill();
+        door.destroy(true, true);
+        console.log("close door");
+
+        doorTime = 500;
+        isToggleDoor = true;
+    }
 }
 
 function createWave(x, y, sprite){
