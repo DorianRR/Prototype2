@@ -71,6 +71,10 @@ function hitEnemy(player, enemy)
 	if(player.body.touching.down && !player.isDashing && !enemy.isStunned)
 	{
 		player.health--;
+		var oneHeart = heart.getChildAt(player.health);
+		if(oneHeart)
+        	oneHeart.destroy(true, true);
+
 		enemy.isStunned = true;
 		sounds.meow.play();
 		console.log(player.health);

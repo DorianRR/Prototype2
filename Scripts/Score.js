@@ -21,6 +21,7 @@ function collectItem(player, collectible){
     sounds.collect.play();
     createScoreAnimate("+100!");
     me.scoreBuffer += 50;
+
 }
 
 function incrementScore()
@@ -62,4 +63,9 @@ var me = this;
         me.scoreBuffer --;
     }
     
+}
+
+function getScore()
+{
+    return this.scoreLabel;
 }

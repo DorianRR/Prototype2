@@ -22,6 +22,12 @@ function createPlayer()
     player.animations.add('dashLeft', [12, 13, 14, 15, 16, 17], 10, true);
     player.animations.add('dashRight', [18, 19, 20, 21, 22, 23], 10, true);
 
+    heart = game.add.group();
+    for(var i = 0; i < 3; i++)
+    {
+        var oneHeart = heart.create(0, 36 * i, 'heart');
+        oneHeart.fixedToCamera = true;
+    }
 
     player.health = 3;
 
@@ -150,6 +156,7 @@ function updatePlayer()
     if(player.health <= 0 )
     {
         player.destroy(true, true);
+
         if(!sounds.gameover.isPlaying)
             sounds.gameover.play("", 0, 1);
     }

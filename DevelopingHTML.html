@@ -39,6 +39,12 @@ function preload(){
 	game.load.image('bomb', 'assets/Bomb.png');
 	game.load.spritesheet('explosion', 'assets/explode.png', 64, 64);
 	game.load.spritesheet('dash', 'assets/mouse dash 45x51', 45, 51);
+	game.load.image('menu', 'assets/menu');
+	game.load.image('exit', 'assets/menu_exit');
+	game.load.image('play', 'assets/menu_play');
+	game.load.image('scoreMenu', 'assets/score');
+	game.load.image('retry', 'assets/score_retry');
+	game.load.image('heart', 'assets/heart.png');
 
 	game.load.audio('collect', 'assets/sound/334209__sethroph__eating-crisps.wav');
 	game.load.audio('meow', 'assets/sound/110011__tuberatanka__cat-meow.wav');
@@ -51,6 +57,8 @@ function preload(){
 }
 
 var player;
+var heart;
+
 var platforms;
 var cursors;
 var enemies;
@@ -64,6 +72,14 @@ var collectible;
 var map;
 var sounds = {};
 
+var menu;
+var playButton;
+var exitButton;
+
+var scoreMenu;
+var retryButton;
+var finalScoreLabel;
+
 var timer = 1000;
 
 function create(){
@@ -72,17 +88,11 @@ function create(){
 
 	map = game.add.tileSprite(0,0, 1600, 800,'map');
 	game.world.setBounds(0,0,1600,800);
-	game.add.sprite(0,0,'enemy');
 
 	cursors = game.input.keyboard.createCursorKeys();
 	//cursors = game.input.keyboard.addKeys("'space': Phaser.KeyCode.SPACEBAR");
 	cursors.space = game.input.keyboard.addKey(32);
 
-	startGame();
-}
-
-function startGame()
-{
 	createScene();
 
 	createPlayer();
@@ -98,11 +108,31 @@ function startGame()
 	sounds.footstep = game.add.audio('footstep');
 	sounds.bgm = game.add.audio('bgm');
 	sounds.explosion = game.add.audio('explode');
-	sounds.gameover.onStop.add(function(){
-		game.paused = true;
-	})
+	sounds.gameover.onStop.add(endGame);
 
 	sounds.bgm.play("", 0, 0.3, true);
+
+	menu = game.add.sprite(-30, 100, 'menu');
+	menu.scale.setTo(0.55);
+	scoreMenu = game.add.sprite(-30, 100, 'scoreMenu');
+	scoreMenu.scale.setTo(0.55);
+	scoreMenu.fixedToCamera = true;
+	scoreMenu.kill();
+
+	//game.input.onDown.add(unpause, self);
+	playButton = game.add.sprite(560, 200, 'play');
+	exitButton = game.add.sprite(560, 270, 'exit');
+	retryButton = game.add.sprite(520, 370, 'retry');
+	retryButton.scale.setTo(0.6);
+	retryButton.fixedToCamera = true;
+	retryButton.kill();
+
+	finalScoreLabel = game.add.text(530, 200, "0", {font: "50px Arial", fill: "#ffffff", stroke: "#535353", strokeThickness: 10}); 
+	finalScoreLabel.fixedToCamera = true;
+	finalScoreLabel.visible = false;
+
+	game.input.onTap.add(startGame, self);
+	game.paused = true;
 
 }
 
@@ -118,10 +148,45 @@ function update(){
 
 
 	game.camera.follow(player);
+
 	//game.debug.cameraInfo(game.camera, 32, 32);
 
 }
 
+function startGame(event)
+{
+
+	if(game.paused)
+	{
+		if(menu.alive == true && event.x > 560 && event.x < 660 && event.y > 200 && event.y < 225)
+		{	
+			console.log('start');
+			game.paused = false;
+			menu.kill();
+			playButton.kill();
+			exitButton.kill();
+
+		}
+
+		//restart game
+		if(scoreMenu.alive == true && event.x > 540 && event.x < 665 && event.y > 385 && event.y < 415)
+		{
+			location.reload();
+		}
+	}
+}
+
+function endGame()
+{
+	game.paused = true;
+	scoreMenu.revive();
+	retryButton.revive();
+
+	var scoreLabel = getScore();
+	finalScoreLabel.text = scoreLabel.text;
+	scoreLabel.visible = false;
+	finalScoreLabel.visible = true;
+}
 
 
 </script>
