@@ -76,7 +76,11 @@ function create(){
 	//cursors = game.input.keyboard.addKeys("'space': Phaser.KeyCode.SPACEBAR");
 	cursors.space = game.input.keyboard.addKey(32);
 
+	startGame();
+}
 
+function startGame()
+{
 	createScene();
 
 	createPlayer();
@@ -98,7 +102,6 @@ function create(){
 	sounds.bgm.play("", 0, 0.3, true);
 
 }
-
 
 
 function update(){
