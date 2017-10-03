@@ -19,6 +19,9 @@ function createPlayer()
     //set animations
 	player.animations.add('left', [0, 1, 2, 3, 4, 5], 10, true);
     player.animations.add('right', [6, 7, 8, 9, 10, 11], 10, true);
+    player.animations.add('dashLeft', [12, 13, 14, 15, 16, 17], 10, true);
+    player.animations.add('dashRight', [18, 19, 20, 21, 22, 23], 10, true);
+
 
     player.health = 3;
 
@@ -42,7 +45,7 @@ function updatePlayer()
     game.physics.arcade.collide(player, platforms);
     game.physics.arcade.collide(player, closedDoors, openDoor, openDoor, this);
     game.physics.arcade.overlap(player, openDoors, closeDoor, closeDoor, this);
-    game.physics.arcade.collide(waves, enemies);
+    //game.physics.arcade.collide(waves, enemies);
     game.physics.arcade.overlap(player, bombs, pickBomb, pickBomb, this);
 
     if(cursors.down.isDown)
@@ -56,10 +59,16 @@ function updatePlayer()
     {
         doorTime -= game.time.elapsed;
     }
+
     if(doorTime <= 0)
     {
         isToggleDoor = false;
     }
+
+    if(!cursors.space.isDown){
+        player.isDashing = false;
+    }
+
 
     //  Reset the players velocity
     player.body.velocity.x = 0;
@@ -68,7 +77,16 @@ function updatePlayer()
     {
         //  Move to the left
         player.body.velocity.x = -150;
-        player.animations.play('left');
+        if(player.isDashing)
+        {
+            player.animations.stop('left');
+            player.animations.play('dashLeft');
+        }
+        else
+        {
+            player.animations.stop('dashLeft');
+            player.animations.play('left');
+        }
         if(!sounds.footstep.isPlaying)
             sounds.footstep.play("", 0, 2.5);
         //sounds.run.play();
@@ -85,7 +103,16 @@ function updatePlayer()
     {
         //  Move to the right
         player.body.velocity.x = 150;
-        player.animations.play('right');
+        if(player.isDashing)
+        {
+            player.animations.stop('right');
+            player.animations.play('dashRight');
+        }
+        else
+        {
+            player.animations.stop('dashRigth');
+            player.animations.play('right');
+        }
         if(!sounds.footstep.isPlaying)
             sounds.footstep.play("", 0, 2.5);
         //sounds.run.play();
@@ -98,17 +125,16 @@ function updatePlayer()
         }
 
     }
-    
-    if(!cursors.space.isDown){
-        player.isDashing = false;
-    }
 
     else
     {
         //  Stand still
         player.animations.stop();
-        player.frame = 4;
+        //player.frame = 4;
     }
+
+    
+
     
     var hitRope = game.physics.arcade.collide(player, ropes);
         //  Allow the player to jump if they are touching the rope.
@@ -133,8 +159,16 @@ function updatePlayer()
 function openDoor(player, door)
 {
     if(cursors.down.isDown && doorTime <= 0){   
-        createDoor(door.x, door.y, "doorOpen", true); 
-        createWave(player.world.x,player.world.y, 'wave', door.isLeft)
+        if(player.x < door.x)
+        {
+            createDoor(door.x, door.y, "doorOpenRight", true, false); 
+          //  createWave(player.world.x,player.world.y, 'wave', false)
+        }
+        else
+        {
+           // createWave(player.world.x,player.world.y, 'wave', door.isLeft)
+            createDoor(door.x - 43, door.y, "doorOpenLeft", true, true); 
+        }
 
         door.destroy(true, true);
         console.log("open door");
@@ -151,7 +185,10 @@ function closeDoor(player, door)
 {
     if(cursors.down.isDown && doorTime <= 0)
     {
-        createDoor(door.x, door.y, "doorClose");
+        if(door.key == 'doorOpenLeft')
+            createDoor(door.x + 43, door.y, "doorClose");
+        else
+            createDoor(door.x, door.y, "doorClose");
         door.kill();
         door.destroy(true, true);
         console.log("close door");

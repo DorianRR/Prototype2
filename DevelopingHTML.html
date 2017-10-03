@@ -26,23 +26,25 @@ function preload(){
 
 	game.load.image('ground', 'assets/floor 200x10.png')
 	//game.load.spritesheet('enemyRight', 'assets/CatAnimationRight.png', 49, 39);
-	game.load.spritesheet('enemy', 'assets/cat walking 55x45', 55, 45); 
+	game.load.spritesheet('enemy', 'assets/cat 55x45.png', 55, 45); 
 	game.load.image('map', "assets/MasterMap.png");
-	game.load.spritesheet('dude','assets/mouse walking 45x51', 45, 51);
+	game.load.spritesheet('dude','assets/mouse 45x51', 45, 51);
 	game.load.image('rollingCheese','assets/cheese 30x31.png');
 	game.load.image('cheese', 'assets/collectable_cheese.png')
 	game.load.image('rope','assets/one tramp 200x16.png');
-	game.load.image('doorOpen', 'assets/door_open.png');
-	game.load.image('doorClose', 'assets/door_close.png');
+	game.load.image('doorOpenLeft', 'assets/open_door_left.png');
+	game.load.image('doorClose', 'assets/closed_door.png');
+	game.load.image('doorOpenRight','assets/open_door_right.png');
 	game.load.image('wave', 'assets/firstaid.png');
 	game.load.image('bomb', 'assets/Bomb.png');
 	game.load.spritesheet('explosion', 'assets/explode.png', 64, 64);
+	game.load.spritesheet('dash', 'assets/mouse dash 45x51', 45, 51);
 
 	game.load.audio('collect', 'assets/sound/334209__sethroph__eating-crisps.wav');
-	game.load.audio('run', 'assets/sound/107624__stintx__running-02.wav');
 	game.load.audio('meow', 'assets/sound/110011__tuberatanka__cat-meow.wav');
 	game.load.audio('jump', 'assets/sound/140867__juskiddink__boing.wav');
 	game.load.audio('footstep', 'assets/sound/footsteps.wav');
+	game.load.audio('explode', 'assets/sound/explosion-4.wav');
 	game.load.audio('bgm', 'assets/sound/bonobo_-_outlier.mp3')
 	game.load.audio('gameover', 'assets/sound/gameover.wav');
 
@@ -95,6 +97,7 @@ function startGame()
 	sounds.gameover = game.add.audio('gameover');
 	sounds.footstep = game.add.audio('footstep');
 	sounds.bgm = game.add.audio('bgm');
+	sounds.explosion = game.add.audio('explode');
 	sounds.gameover.onStop.add(function(){
 		game.paused = true;
 	})

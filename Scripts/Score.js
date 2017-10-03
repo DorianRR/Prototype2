@@ -17,7 +17,7 @@ function createScore()
 function collectItem(player, collectible){
     var me = this;
 
-    collectible.kill();
+    collectible.destroy(true, true);
     sounds.collect.play();
     createScoreAnimate("+100!");
     me.scoreBuffer += 50;

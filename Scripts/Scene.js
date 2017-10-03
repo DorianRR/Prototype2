@@ -113,20 +113,26 @@ function createBomb(x, y, sprite)
 		bomb.explode = function(enemy){
 			//playe animation of explosion
 			var explosionAnim = game.add.sprite(bomb.world.x, bomb.world.y, 'explosion');
-			console.log(explosionAnim);
 			var anim = explosionAnim.animations.add('explode', [0, 0, 0, 0, 0, 0], 10, false);
 			explosionAnim.animations.play('explode');
 			anim.onComplete.add(function(sprite, anim){
 				sprite.kill();
 			}, this);
 			console.log("Explode");
+			sounds.explosion.play();
 			if(enemy)
 			{
 				sounds.meow.play();
-				if(enemy.direction == -1)
-					enemy.animations.play('stunLeft');
+				if(enemy.direction > 0 )
+				{
+					console.log('stunRight');
+					enemy.animations.play('stunRight', 10, true);
+				}
 				else 
-					enemy.animations.play('stunRight');
+				{
+					console.log('stunLeft');
+					enemy.animations.play('stunLeft', 10, true);
+				}
 				enemy.isStunned = true;
 			}
 		 	//clear bomb
@@ -236,8 +242,3 @@ function changeDirCheese(cheese, door)
 	cheese.direction = -cheese.direction;
 }
 
-function collectItem(player, cheese){
-	//cheese.kill();
-	collectible.removeChild(cheese);
-	sounds.collect.play();
-	}
