@@ -69,6 +69,8 @@ function updatePlayer()
         //  Move to the left
         player.body.velocity.x = -150;
         player.animations.play('left');
+        if(!sounds.footstep.isPlaying)
+            sounds.footstep.play("", 0, 2.5);
         //sounds.run.play();
 
             //Dash code
@@ -84,6 +86,8 @@ function updatePlayer()
         //  Move to the right
         player.body.velocity.x = 150;
         player.animations.play('right');
+        if(!sounds.footstep.isPlaying)
+            sounds.footstep.play("", 0, 2.5);
         //sounds.run.play();
 
         //Dash code
@@ -119,8 +123,9 @@ function updatePlayer()
     
     if(player.health <= 0 )
     {
-        player.kill();
-        sounds.gameover.play();
+        player.destroy(true, true);
+        if(!sounds.gameover.isPlaying)
+            sounds.gameover.play("", 0, 1);
     }
 }
 
@@ -129,13 +134,13 @@ function openDoor(player, door)
 {
     if(cursors.down.isDown && doorTime <= 0){   
         createDoor(door.x, door.y, "doorOpen", true); 
+        createWave(player.world.x,player.world.y, 'wave', door.isLeft)
 
         door.destroy(true, true);
         console.log("open door");
         doorTime = 500;
         isToggleDoor = true;
 
-        createWave(player.world.x,player.world.y, 'wave')
 
         return false;
     }    
@@ -156,11 +161,14 @@ function closeDoor(player, door)
     }
 }
 
-function createWave(x, y, sprite){
+function createWave(x, y, sprite, isLeft){
     var wave = waves.create(x , y - 20, sprite);
     wave.scale.setTo(2);
     wave.body.immovable = true;
-    wave.body.velocity.x = 300;
+    if(isLeft)
+        wave.body.velocity.x = -300;
+    else
+        wave.body.velocity.x = 300;
     }
 
 

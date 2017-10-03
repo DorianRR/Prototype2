@@ -87,7 +87,7 @@ function createRope(x, y, sprite, scaleX)
 }
 
 //Add one door
-function createDoor(x, y, sprite, isOpen = false)
+function createDoor(x, y, sprite, isOpen = false, isLeft = false)
 {
 	var door;
 	if(isOpen)
@@ -100,6 +100,7 @@ function createDoor(x, y, sprite, isOpen = false)
 	}
 	door.body = new Phaser.Physics.Arcade.Body(door);
 	door.body.immovable = true;
+	door.isLeft = isLeft;
 	//boor.direction = 
 }
 
@@ -173,7 +174,7 @@ function updateScene()
 	//spwan items
 	if(timer <= 0)
 	{
-		timer = 3000;
+		timer = 1000;
 		var isStationary = game.rnd.integerInRange(0, 1);
 		if(isStationary)
 			createCheese(game.rnd.integerInRange(0, map.width - 30), game.rnd.integerInRange(226, map.height - 40), 'cheese', true);
@@ -197,7 +198,7 @@ function updateBomb(bomb)
 	if(bombHitRope && bomb.body.touching.down)
 		bomb.body.velocity.y = -400;
 
-	game.physics.arcade.overlap(bombs, enemies, bomb.detectEnemy, bomb.detectEnemy, this);
+	game.physics.arcade.overlap(bomb, enemies, bomb.detectEnemy, bomb.detectEnemy, this);
 
 }
 
