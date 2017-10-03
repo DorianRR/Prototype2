@@ -123,6 +123,10 @@ function createBomb(x, y, sprite)
 			if(enemy)
 			{
 				sounds.meow.play();
+				if(enemy.direction == -1)
+					enemy.animations.play('stunLeft');
+				else 
+					enemy.animations.play('stunRight');
 				enemy.isStunned = true;
 			}
 		 	//clear bomb
