@@ -1,5 +1,6 @@
 var dropTime = 500;
-
+var doorTime = 0;
+var isToggleDoor = false;
 
 function createPlayer()
 {
@@ -37,11 +38,10 @@ function updatePlayer()
 {
 
 
-    //console.log(player.world.y);
 	//  Collide the player with the platforms
-    
     game.physics.arcade.collide(player, platforms);
-    game.physics.arcade.collide(player, doors, openDoor, openDoor, this);
+    game.physics.arcade.collide(player, closedDoors, openDoor, openDoor, this);
+    game.physics.arcade.overlap(player, openDoors, closeDoor, closeDoor, this);
     game.physics.arcade.collide(waves, enemies);
     game.physics.arcade.overlap(player, bombs, pickBomb, pickBomb, this);
 
@@ -52,6 +52,15 @@ function updatePlayer()
     if(player.children != null)
         dropTime -= game.time.elapsed;
 
+    if(isToggleDoor)
+    {
+        doorTime -= game.time.elapsed;
+    }
+    if(doorTime <= 0)
+    {
+        isToggleDoor = false;
+    }
+
     //  Reset the players velocity
     player.body.velocity.x = 0;
 
@@ -60,6 +69,8 @@ function updatePlayer()
         //  Move to the left
         player.body.velocity.x = -150;
         player.animations.play('left');
+        if(!sounds.footstep.isPlaying)
+            sounds.footstep.play("", 0, 2.5);
         //sounds.run.play();
 
             //Dash code
@@ -75,6 +86,8 @@ function updatePlayer()
         //  Move to the right
         player.body.velocity.x = 150;
         player.animations.play('right');
+        if(!sounds.footstep.isPlaying)
+            sounds.footstep.play("", 0, 2.5);
         //sounds.run.play();
 
         //Dash code
@@ -110,30 +123,52 @@ function updatePlayer()
     
     if(player.health <= 0 )
     {
-        player.kill();
-        sounds.gameover.play();
+        player.destroy(true, true);
+        if(!sounds.gameover.isPlaying)
+            sounds.gameover.play("", 0, 1);
     }
 }
 
 //Open a door
 function openDoor(player, door)
 {
-    if(cursors.space.isDown){    
-        var openDoor = doors.create(door.x, door.y, "doorOpen");
+    if(cursors.down.isDown && doorTime <= 0){   
+        createDoor(door.x, door.y, "doorOpen", true); 
+        createWave(player.world.x,player.world.y, 'wave', door.isLeft)
+
         door.destroy(true, true);
         console.log("open door");
-        createWave(player.world.x,player.world.y, 'wave')
+        doorTime = 500;
+        isToggleDoor = true;
+
 
         return false;
     }    
     
 }
 
-function createWave(x, y, sprite){
+function closeDoor(player, door)
+{
+    if(cursors.down.isDown && doorTime <= 0)
+    {
+        createDoor(door.x, door.y, "doorClose");
+        door.kill();
+        door.destroy(true, true);
+        console.log("close door");
+
+        doorTime = 500;
+        isToggleDoor = true;
+    }
+}
+
+function createWave(x, y, sprite, isLeft){
     var wave = waves.create(x , y - 20, sprite);
     wave.scale.setTo(2);
     wave.body.immovable = true;
-    wave.body.velocity.x = 300;
+    if(isLeft)
+        wave.body.velocity.x = -300;
+    else
+        wave.body.velocity.x = 300;
     }
 
 

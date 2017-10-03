@@ -5,55 +5,54 @@ function createScene()
 	platforms = game.add.group();
 	platforms.enableBody = true;
 
-	createPlatform(0, game.world.height -32, 'ground', .4, 1);
-	//createPlatform(0, game.world.height -32, 'ground', .4, .5);
-	createPlatform(0, game.world.height -140, 'ground', .4, .5);
-	createPlatform(0, game.world.height -245, 'ground', .4, .5);
-	createPlatform(0, game.world.height -354, 'ground', .4, .5);
-	createPlatform(0, game.world.height -464, 'ground', .38, .5);
+	createPlatform(155, 338, 'ground', 1, 1.45);
+	createPlatform(155, 446, 'ground', 1, 1.45);
+	createPlatform(155, 555, 'ground', 1, 1.45);
+	createPlatform(155, 660, 'ground', 1, 1.45);
 
 
-	createPlatform(359, game.world.height -140, 'ground', .8, .5);
-	createPlatform(359, game.world.height -245, 'ground', .8, .5);
-	createPlatform(359, game.world.height -355, 'ground', .8, .5);
-	createPlatform(359, game.world.height -464, 'ground', .8, .5);
+	createPlatform(505, 338, 'ground', 1, 1.45);
+	createPlatform(505, 446, 'ground', 1, 1.45);
+	createPlatform(505, 555, 'ground', 1, 1.45);
+	createPlatform(505, 660, 'ground', 1, 1.45);
 
-	createPlatform(935, game.world.height -140, 'ground', .65, .5);
-	createPlatform(935, game.world.height -245, 'ground', .65, .5);
-	createPlatform(935, game.world.height -355, 'ground', .65, .5);
-	createPlatform(935, game.world.height -464, 'ground', .65, .5);
+	createPlatform(950, 338, 'ground', 0.9, 1.45);
+	createPlatform(950, 446, 'ground', 0.9, 1.45);
+	createPlatform(950, 555, 'ground', 0.9, 1.45);
+	createPlatform(950, 660, 'ground', 0.9, 1.45);
 
-	createPlatform(1364, game.world.height -140, 'ground', .65, .5);
-	createPlatform(1364, game.world.height -245, 'ground', .65, .5);
-	createPlatform(1364, game.world.height -355, 'ground', .65, .5);
-	createPlatform(1364, game.world.height -464, 'ground', .65, .5);
+	createPlatform(1295, 338, 'ground', 0.75, 1.45);
+	createPlatform(1295, 446, 'ground', 0.75, 1.45);
+	createPlatform(1295, 555, 'ground', 0.75, 1.45);
+	createPlatform(1295, 660, 'ground', 0.75, 1.45);
 
-	createPlatform(360, game.world.height -32, 'ground', 1, 1);
-	createPlatform(935, game.world.height -32, 'ground', .65, 1);
-	createPlatform(1366, game.world.height -32, 'ground', .65, 1);
-	createPlatform(0, 226, 'ground', 100, .5);
+	createPlatform(140, 768, 'ground', 6.6, 1);
+	createPlatform(0, 225, 'ground', 10, 1);
 
 
 	//Add group of ropes
 	ropes = game.add.group();
 	ropes.enableBody = true;
 
-	createRope(161, game.world.height -10, 'rope', 1);
-	createRope(161, game.world.height -245, 'rope', .98);
-	createRope(680, game.world.height -140, 'rope', 1.27);
-
-	createRope(1196, game.world.height -10, 'rope', .85);
+	createRope(0, 768, 'rope', 0.7);
+	createRope(373, 446, 'rope', 0.55);
+	createRope(720, 660, 'rope', 1);
+	createRope(1140, 555, 'rope', 0.7);
+	createRope(1460, 768, 'rope', 1);
 
 	//Add group of doors
-	//doors = game.add.group();
-	//doors.enableBody = true;
+	closedDoors = game.add.group();
 
-	// createDoor(200, 100, 'doorClose');
-	// createDoor(800, 100, 'doorClose');
-	// createDoor(200, 300, 'doorClose');
-	// createDoor(800, 300, 'doorClose');
-	// createDoor(200, 468, 'doorClose');
-	// createDoor(800, 468, 'doorClose');
+	createDoor(200, 240, 'doorClose');
+	createDoor(300, 460, 'doorClose');
+	createDoor(1350, 240, 'doorClose');
+	createDoor(1000, 350, 'doorClose');
+	createDoor(600, 565, 'doorClose');
+	createDoor(1000, 565, 'doorClose');
+	createDoor(150, 675, 'doorClose');
+	createDoor(300, 675, 'doorClose');
+
+	openDoors = game.add.group();
 
 	bombs = game.add.group();
 	bombs.enableBody = true;
@@ -65,8 +64,8 @@ function createScene()
 	collectible.enableBody = true;
 
 	for (var i = 0; i < 5; i++){
-		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, map.height - 40), 'star', true);
-		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, map.height - 40), 'star', false);
+		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, map.height - 40), 'cheese', true);
+		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, map.height - 40), 'rollingCheese', false);
 	}
 
 }
@@ -88,12 +87,21 @@ function createRope(x, y, sprite, scaleX)
 }
 
 //Add one door
-function createDoor(x, y, sprit)
+function createDoor(x, y, sprite, isOpen = false, isLeft = false)
 {
-	var door = doors.create(x, y, sprit);
+	var door;
+	if(isOpen)
+	{
+		door = openDoors.create(x, y, sprite);
+	}
+	else
+	{
+		door = closedDoors.create(x, y, sprite);		
+	}
 	door.body = new Phaser.Physics.Arcade.Body(door);
-	door.body.enable = true;
 	door.body.immovable = true;
+	door.isLeft = isLeft;
+	//boor.direction = 
 }
 
 //Add one bomb
@@ -103,14 +111,22 @@ function createBomb(x, y, sprite)
 	bomb.body.gravity.y = 300;
 	bomb.onFire = false;
 		bomb.explode = function(enemy){
-		console.log("Explode");
-		if(enemy)
-		{
-			sounds.meow.play();
-			enemy.isStunned = true;
-		}
-	 	//clear bomb
-	 	bomb.kill();
+			//playe animation of explosion
+			var explosionAnim = game.add.sprite(bomb.world.x, bomb.world.y, 'explosion');
+			console.log(explosionAnim);
+			var anim = explosionAnim.animations.add('explode', [0, 0, 0, 0, 0, 0], 10, false);
+			explosionAnim.animations.play('explode');
+			anim.onComplete.add(function(sprite, anim){
+				sprite.kill();
+			}, this);
+			console.log("Explode");
+			if(enemy)
+			{
+				sounds.meow.play();
+				enemy.isStunned = true;
+			}
+		 	//clear bomb
+		 	bomb.kill();
  	};
 
 	bomb.detectEnemy = function(){
@@ -148,6 +164,7 @@ function updateScene()
 	bombs.forEach(updateBomb, this, true);
 	game.physics.arcade.collide(collectible, platforms);
 	game.physics.arcade.overlap(player, collectible, collectItem, null, this);
+	game.physics.arcade.collide(collectible, closedDoors, changeDirCheese, null, this);
 	collectible.forEach(updateCheese, this, true);
 
 	//start timer
@@ -157,10 +174,14 @@ function updateScene()
 	//spwan items
 	if(timer <= 0)
 	{
-		timer = 5000;
-		createCheese(game.rnd.integerInRange(0, map.width - 30), game.rnd.integerInRange(226, map.height - 40), 
-			'star', game.rnd.integerInRange(0, 1))
+		timer = 1000;
+		var isStationary = game.rnd.integerInRange(0, 1);
+		if(isStationary)
+			createCheese(game.rnd.integerInRange(0, map.width - 30), game.rnd.integerInRange(226, map.height - 40), 'cheese', true);
+		else
+			createCheese(game.rnd.integerInRange(0, map.width - 30), game.rnd.integerInRange(226, map.height - 40), 'rollingCheese', false);
 	}
+
 }
 
 function updateBomb(bomb)
@@ -177,7 +198,7 @@ function updateBomb(bomb)
 	if(bombHitRope && bomb.body.touching.down)
 		bomb.body.velocity.y = -400;
 
-	game.physics.arcade.overlap(bombs, enemies, bomb.detectEnemy, bomb.detectEnemy, this);
+	game.physics.arcade.overlap(bomb, enemies, bomb.detectEnemy, bomb.detectEnemy, this);
 
 }
 
@@ -193,7 +214,7 @@ function updateCheese(cheese)
 	{
 		cheese.direction = -1;
 	}
-	else if( cheese.world.x <= 15)
+	else if( cheese.world.x <= 20)
 	{
 		cheese.direction = 1;
 	}
@@ -204,6 +225,11 @@ function updateCheese(cheese)
 		cheese.body.angularVelocity = cheese.direction * 300;
 	}
 		
+}
+
+function changeDirCheese(cheese, door)
+{
+	cheese.direction = -cheese.direction;
 }
 
 function collectItem(player, cheese){

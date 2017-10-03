@@ -7,32 +7,38 @@ function createEnemies()
 
 	//create enemy randomly
 	for(var i = 0; i < 5; i++)
-		createEnemy(game.rnd.integerInRange(0, game.world.width), game.rnd.integerInRange(226, game.world.height - 40));
+		createEnemy(game.rnd.integerInRange(0, game.world.width), game.rnd.integerInRange(226, game.world.height - 100));
 }
 
 var hitPlatform; 
+var spawnTime = 0;
 
 function updateEnemies()
 {
     //call hitEnemy() when hit
 	game.physics.arcade.overlap(player, enemies, hitEnemy, null, this);
-
 	game.physics.arcade.collide(enemies, platforms);
+	//game.physics.arcade.collide(enemies, enemies);
+	game.physics.arcade.collide(enemies, closedDoors);
 
 	enemies.forEach(move, this, true);
 
-	// //This is the signal for enemies bounding off walls
-	// enemy.body.onWorldBounds = new Phaser.Signal();
-	// enemy.body.onWorldBounds.add(changeDirection, this);
-	// enemy.body.onWorldBounds.dispatch(changeDirection, this);
+	spawnTime -= game.time.elapsed;
+	if(spawnTime <= 0){
+		createEnemy(game.rnd.integerInRange(0, game.world.width), game.rnd.integerInRange(226, game.world.height - 100));
+		spawnTime = 7500;
+		console.log("Random Spawn!");
+	}
+
 }
 
 
 //create one enemy at (x, y)
 function createEnemy(x, y)
-{
+{	
 	var enemy = enemies.create(x, y, 'enemy');
-
+	enemy.animations.add('left', [0, 1, 2, 3, 4, 5], 10, true);
+	enemy.animations.add('right', [6, 7, 8, 9, 10, 11], 10, true);
 	game.physics.arcade.enable(enemy);
 
 	//enemy can't go off world bounds
@@ -40,15 +46,20 @@ function createEnemy(x, y)
 
 	enemy.body.gravity.y = 350;
 	enemy.direction = game.rnd.integerInRange(0,1) * 2 - 1;
+	
+	if(enemy.direction > 0){
+		enemy.animations.play('right');
+	}
+	else{
+		enemy.animations.play('left');
+	}
 
 	enemy.isStunned = false;
 	enemy.stunnedTime = 5000;
-
+	enemy.spawnTime = 7500;
 
 	//set animations
-	enemy.animations.add('left', [0, 1, 2, 3, 4, 5], 10, true);
-
-
+	
 }
 
 //callback function when player hits with enemy
@@ -76,14 +87,12 @@ function move(enemy)
     	//enemy.isStunned = 500;
     }
 
- 	
-
 	else if(enemy.world.x < 5){
 			enemy.direction = 1;
-			//enemy.animations.play('enemyRight');
+			enemy.animations.play('right');
 
 	}
-	else if(enemy.world.x > 1545){
+	else if(enemy.world.x > game.world.width-60){
 			enemy.direction = -1;
 			enemy.animations.play('left');
 	}
@@ -95,7 +104,7 @@ function move(enemy)
 		    enemy.direction = -1;
 		}
 		else{
-			//enemy.animations.play('enemyRight');
+			enemy.animations.play('right');
 		    enemy.direction = 1;    
 		}
 	}  	

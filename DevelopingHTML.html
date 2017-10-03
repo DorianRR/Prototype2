@@ -24,23 +24,27 @@ var game = new Phaser.Game(800, 600, Phaser.AUTO, '', {preload: preload, create:
 
 function preload(){
 
-	game.load.image('ground', 'assets/platform.png')
+	game.load.image('ground', 'assets/floor 200x10.png')
 	//game.load.spritesheet('enemyRight', 'assets/CatAnimationRight.png', 49, 39);
 	game.load.spritesheet('enemy', 'assets/cat walking 55x45', 55, 45); 
 	game.load.image('map', "assets/MasterMap.png");
 	game.load.spritesheet('dude','assets/mouse walking 45x51', 45, 51);
-	game.load.image('star','assets/star.png');
-	game.load.image('rope','assets/rope.png');
+	game.load.image('rollingCheese','assets/cheese 30x31.png');
+	game.load.image('cheese', 'assets/collectable_cheese.png')
+	game.load.image('rope','assets/one tramp 200x16.png');
 	game.load.image('doorOpen', 'assets/door_open.png');
 	game.load.image('doorClose', 'assets/door_close.png');
 	game.load.image('wave', 'assets/firstaid.png');
 	game.load.image('bomb', 'assets/Bomb.png');
+	game.load.spritesheet('explosion', 'assets/explode.png', 64, 64);
 
-	game.load.audio('collect', 'assets/sound/75235__creek23__cha-ching.wav');
+	game.load.audio('collect', 'assets/sound/334209__sethroph__eating-crisps.wav');
 	game.load.audio('run', 'assets/sound/107624__stintx__running-02.wav');
 	game.load.audio('meow', 'assets/sound/110011__tuberatanka__cat-meow.wav');
 	game.load.audio('jump', 'assets/sound/140867__juskiddink__boing.wav');
-	//game.load.audio('gameover', 'gameover.wav');
+	game.load.audio('footstep', 'assets/sound/footsteps.wav');
+	game.load.audio('bgm', 'assets/sound/bonobo_-_outlier.mp3')
+	game.load.audio('gameover', 'assets/sound/gameover.wav');
 
 }
 
@@ -49,7 +53,8 @@ var platforms;
 var cursors;
 var enemies;
 var ropes;
-var doors;
+var openDoors;
+var closedDoors;
 var bombs;
 
 var collectible;
@@ -57,7 +62,7 @@ var collectible;
 var map;
 var sounds = {};
 
-var timer = 5000;
+var timer = 1000;
 
 function create(){
 
@@ -81,10 +86,16 @@ function create(){
 	createScore();
 
 	sounds.collect = game.add.audio('collect');
-	sounds.run = game.add.audio('run');
 	sounds.meow = game.add.audio('meow');
 	sounds.jump = game.add.audio('jump');
 	sounds.gameover = game.add.audio('gameover');
+	sounds.footstep = game.add.audio('footstep');
+	sounds.bgm = game.add.audio('bgm');
+	sounds.gameover.onStop.add(function(){
+		game.paused = true;
+	})
+
+	sounds.bgm.play("", 0, 0.3, true);
 
 }
 
