@@ -39,6 +39,8 @@ function createEnemy(x, y)
 	var enemy = enemies.create(x, y, 'enemy');
 	enemy.animations.add('left', [0, 1, 2, 3, 4, 5], 10, true);
 	enemy.animations.add('right', [6, 7, 8, 9, 10, 11], 10, true);
+	enemy.animations.add('stunLeft', [12, 13], 10, true);
+	enemy.animations.add('stunRight', [14, 15,], 10, true);
 	game.physics.arcade.enable(enemy);
 
 	//enemy can't go off world bounds
