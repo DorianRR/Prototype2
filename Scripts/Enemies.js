@@ -71,7 +71,9 @@ function hitEnemy(player, enemy)
 	if(player.body.touching.down && !player.isDashing && !enemy.isStunned)
 	{
 		player.health--;
-		var oneHeart = heart.getChildAt(player.health);
+		var oneHeart;
+		if(player.health >= 0)
+			oneHeart = heart.getChildAt(player.health);
 		if(oneHeart)
         	oneHeart.destroy(true, true);
 
