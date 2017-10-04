@@ -17,18 +17,31 @@ function createScore()
 function collectItem(player, collectible){
     var me = this;
 
+    if(collectible.key == 'cracker')
+    {
+        me.scoreBuffer += 100;
+        createScoreAnimate("+100!");
+    }
+    else if(collectible.key == 'rollingCheese')
+    {
+        me.scoreBuffer += 50;
+        createScoreAnimate("+50");
+    }
+    else
+    {
+        me.scoreBuffer += 30;
+        createScoreAnimate("+30");
+    }
+
     collectible.destroy(true, true);
     sounds.collect.play();
-    createScoreAnimate("+100!");
-    me.scoreBuffer += 50;
-
 }
 
-function incrementScore()
+function incrementScore(step)
 {
     var me = this;
 
-    me.score += 2;
+    me.score += step;
     me.scoreLabel.text = me.score;
 
 }
@@ -59,8 +72,8 @@ function updateScore()
 var me = this;
 
     if(me.scoreBuffer > 0){
-        me.incrementScore();
-        me.scoreBuffer --;
+        me.incrementScore(2);
+        me.scoreBuffer -= 2;
     }
     
 }

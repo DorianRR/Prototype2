@@ -63,8 +63,9 @@ function createScene()
 	collectible = game.add.group();
 	collectible.enableBody = true;
 
-	for (var i = 0; i < 5; i++){
+	for (var i = 0; i < 3; i++){
 		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, map.height - 40), 'cheese', true);
+		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, map.height - 40), 'cracker', false);
 		createCheese(game.rnd.integerInRange(0, map.width), game.rnd.integerInRange(226, map.height - 40), 'rollingCheese', false);
 	}
 
@@ -189,7 +190,12 @@ function updateScene()
 		if(isStationary)
 			createCheese(game.rnd.integerInRange(0, map.width - 30), game.rnd.integerInRange(226, map.height - 40), 'cheese', true);
 		else
-			createCheese(game.rnd.integerInRange(0, map.width - 30), game.rnd.integerInRange(226, map.height - 40), 'rollingCheese', false);
+		{
+			if(game.rnd.integerInRange(0, 1))
+				createCheese(game.rnd.integerInRange(0, map.width - 30), game.rnd.integerInRange(226, map.height - 40), 'rollingCheese', false);
+			else
+				createCheese(game.rnd.integerInRange(0, map.width - 30), game.rnd.integerInRange(226, map.height - 40), 'cracker', false);
+		}
 	}
 
 }

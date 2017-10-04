@@ -101,7 +101,7 @@ function updatePlayer()
         if(cursors.space.isDown && runTimer <= 100){
             player.isDashing = true;
             runTimer ++;
-            player.body.velocity.x *= 2;
+            player.body.velocity.x *= 4;
         }
     }
 
