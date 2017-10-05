@@ -110,8 +110,7 @@ function move(enemy)
 			enemy.animations.play('left');
 	}
 
-   else if(player.body.touching.down && Math.abs(player.world.y - enemy.world.y) < 50)
-	{
+   else if(player.body.touching.down && Math.abs(player.world.y - enemy.world.y) < 50){
 		if(enemy.x > player.x){
 			enemy.animations.play('left');
 		    enemy.direction = -1;
@@ -121,8 +120,7 @@ function move(enemy)
 		    enemy.direction = 1;    
 		}
 	}  	
-    //console.log(enemy.directon);
-    enemy.body.velocity.x = enemy.direction * 125;
+
 
     //can't move when stunned
     if(enemy.isStunned)
@@ -141,4 +139,18 @@ function move(enemy)
     	enemy.animations.stop('stunLeft');
     	enemy.animations.stop('stunRight');
     }
+
+    if(enemy.body.velocity.x < 125){
+    	console.log("poop");
+    	if((player.world.x - enemy.world.x) < 0){
+    		enemy.animations.play('left');
+    		enemy.direction = -1;
+
+    	}
+    	else{
+    		enemy.animations.play('right');
+    		enemy.direction = 1;
+    	}
+    }
+    enemy.body.velocity.x = enemy.direction * 125;
 }
