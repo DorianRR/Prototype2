@@ -122,14 +122,6 @@ function move(enemy)
 	}  	
 
 
-    //can't move when stunned
-    if(enemy.isStunned)
-    {
-    	enemy.body.velocity.x = 0;
-    	enemy.animations.stop('left');
-    	enemy.animations.stop('right');
-    	enemy.stunnedTime -= game.time.elapsed;
-    }
 
     //reset time
     if(enemy.stunnedTime <= 0)
@@ -153,4 +145,14 @@ function move(enemy)
     	}
     }
     enemy.body.velocity.x = enemy.direction * 125;
+
+        //can't move when stunned
+    if(enemy.isStunned)
+    {
+    	enemy.body.velocity.x = 0;
+    	enemy.animations.stop('left');
+    	enemy.animations.stop('right');
+    	enemy.stunnedTime -= game.time.elapsed;
+    }
+
 }
